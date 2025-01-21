@@ -21,12 +21,24 @@ require("lazy").setup({
   spec = {
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     {
-      "spaceduck-theme/nvim",
+      "pineapplegiant/spaceduck",
       config = function()
-        vim.cmd.colorscheme("spaceduck")
+        -- Apply the spaceduck theme
+        vim.cmd("colorscheme spaceduck")
+
+        -- Customize the comment color
+        vim.cmd([[
+        highlight Comment guifg=#ECF0C1
+      ]])
       end,
     },
     { import = "plugins" },
+  },
+  opts = {
+    clipboard = {
+      enabled = true,
+      provider = "unnamedplus",
+    },
   },
   defaults = {
     -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
@@ -54,3 +66,5 @@ require("lazy").setup({
     },
   },
 })
+-- enable system clipboard
+vim.opt.clipboard = "unnamedplus"
