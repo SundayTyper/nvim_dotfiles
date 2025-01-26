@@ -1,7 +1,7 @@
 -- blink-completion.lua
 return {
   {
-    "saghen/blink.cmp",
+    "Saghen/blink.cmp",
     dependencies = "rafamadriz/friendly-snippets",
     version = "v0.*",
     opts = {

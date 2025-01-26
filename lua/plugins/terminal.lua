@@ -10,7 +10,7 @@ return {
         -- Configure the floating window appearance
         float_opts = {
           border = "curved", -- Options: 'single', 'double', 'shadow', 'curved'
-          width = 80,
+          width = 160,
           height = 80,
           winblend = 3,
         },

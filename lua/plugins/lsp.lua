@@ -2,7 +2,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      "saghan/blink.cmp",
+      "saghen/blink.cmp",
       "folke/lazydev.nvim",
     },
     config = function()
@@ -39,12 +39,12 @@ return {
             return
           end
           if
-              vim.bo.filetype == "lua"
-              or vim.bo.filetype == "c"
-              or vim.bo.filetype == "cpp"
-              or vim.bo.filetype == "py"
-              or vim.bo.filetype == "ts"
-              or vim.bo.filetype == "js"
+            vim.bo.filetype == "lua"
+            or vim.bo.filetype == "c"
+            or vim.bo.filetype == "cpp"
+            or vim.bo.filetype == "py"
+            or vim.bo.filetype == "ts"
+            or vim.bo.filetype == "js"
           then
             -- Format the current buffer on save
             vim.api.nvim_create_autocmd("BufWritePre", {
