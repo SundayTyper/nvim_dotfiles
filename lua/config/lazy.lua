@@ -12,8 +12,8 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     vim.fn.getchar()
     os.exit(1)
   end
-  end
- vim.opt.rtp:prepend(lazypath)
+end
+vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = " "
 
@@ -34,6 +34,7 @@ require("lazy").setup({
       end,
     },
     { import = "plugins" },
+    { import = "config" },
   },
   opts = {
     clipboard = {
