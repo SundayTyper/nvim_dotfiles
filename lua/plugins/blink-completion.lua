@@ -1,7 +1,7 @@
 -- blink-completion.lua
 return {
   {
-    "Saghen/blink.cmp",
+    "saghen/blink.cmp",
     dependencies = "rafamadriz/friendly-snippets",
     version = "v0.*",
     opts = {
@@ -14,13 +14,10 @@ return {
       },
       completion = {
         list = {
-          selection = "manual", -- set to preselect, manual or auto_insert
-          --   preselect = false,
-          --   auto_insert = false,
-          -- },
+          selection = { preselect = false, auto_insert = false }, -- set to preselect, manual or auto_insert
         },
         ghost_text = {
-          enabled = false,
+          enabled = true,
         },
       },
       signature = { enabled = true },
