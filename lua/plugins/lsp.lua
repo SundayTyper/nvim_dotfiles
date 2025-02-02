@@ -2,51 +2,12 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
       "saghen/blink.cmp",
-      "folke/lazydev.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      "joechrisellis/lsp-format-modifications.nvim",
     },
     config = function()
       local capabilities = require("blink.cmp").get_lsp_capabilities()
-
-      -- Tree-sitter setup
-      require("nvim-treesitter.configs").setup({
-        ensure_installed = {
-          "c",
-          "cpp",
-          "css",
-          "csv",
-          "bash",
-          "cmake",
-          "dockerfile",
-          "gitignore",
-          "go",
-          "html",
-          "javascript",
-          "latex",
-          "lua",
-          "markdown",
-          "markdown_inline",
-          "ninja",
-          "powershell",
-          "python",
-          "regex",
-          "rust",
-          "sql",
-          "typescript",
-          "vim",
-          "yaml",
-        },
-        modules = {},
-        ignore_install = {},
-        sync_install = true,
-        auto_install = true,
-        highlight = {
-          enable = true,
-          additional_vim_regex_highlighting = false,
-        },
-      })
 
       -- Lua LSP setup
       require("lspconfig").lua_ls.setup({

@@ -1,0 +1,42 @@
+-- Tree-sitter setup
+return {
+  {
+    -- "nvim-treesitter/nvim-treesitter",
+    -- opts = {
+    --   ensure_installed = {
+    --     "c",
+    --     "cpp",
+        -- "css",
+        -- "csv",
+        -- "bash",
+        -- "cmake",
+        -- "dockerfile",
+        -- "gitignore",
+        -- "go",
+        -- "html",
+        -- "javascript",
+        -- "latex",
+        -- "lua",
+        -- "markdown",
+        -- "markdown_inline",
+        -- "ninja",
+        -- "powershell",
+        -- "python",
+        -- "regex",
+        -- "rust",
+        -- "sql",
+      --   "typescript",
+      --   "vim",
+      --   "yaml",
+      -- },
+      -- modules = {},
+      -- ignore_install = {},
+      -- sync_install = true,
+      -- auto_install = true,
+      -- highlight = {
+      --   enable = true,
+    --     additional_vim_regex_highlighting = false,
+    --   },
+    -- }),
+  },
+}
