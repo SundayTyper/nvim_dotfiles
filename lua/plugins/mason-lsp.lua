@@ -20,7 +20,7 @@ return {
         "codespell",
         "trim_whitespace",
       },
-      autoimatic_installation = true,
+      automatic_installation = true,
     },
   },
 }

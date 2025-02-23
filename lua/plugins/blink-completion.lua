@@ -11,6 +11,11 @@ return {
         ["<Tab>"] = { "select_next" },
         ["<S-Tab>"] = { "select_prev" },
         ["<S-CR>"] = { "accept" },
+        -- Disable key maps that I don't like
+        ["<Up>"] = {},
+        ["<Down>"] = {},
+        ["<C-p>"] = {},
+        ["<C-n>"] = {},
       },
       completion = {
         list = {
