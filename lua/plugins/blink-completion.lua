@@ -8,9 +8,9 @@ return {
       keymap = {
         preset = "default",
         -- Custom key mappings
-        ["<Tab>"] = { "select_next" },
-        ["<S-Tab>"] = { "select_prev" },
-        ["<S-CR>"] = { "accept" },
+        ["<C-Up>"] = { "select_next" },
+        ["<C-Down>"] = { "select_prev" },
+        ["<C-CR>"] = { "accept" },
         -- Disable key maps that I don't like
         ["<Up>"] = {},
         ["<Down>"] = {},
