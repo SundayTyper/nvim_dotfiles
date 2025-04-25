@@ -7,14 +7,8 @@ O.options = {
 
   -- Enable line wrapping by default
   wrap = true,
-  wrapmargin = 120,
+  wrapmargin = 100,
   ruler = true,
-
-  -- Tab settings
-  tabstop = 4, -- Number of spaces per tab
-  shiftwidth = 4, -- Number of spaces for indentation
-  expandtab = true, -- Use spaces instead of tabs
-  autoindent = true, -- Auto-indent new lines
 
   -- Search settings
   incsearch = true, -- Incremental search
@@ -30,6 +24,7 @@ O.options = {
 
 O.commands = {
   syntax_on = "syntax on",
+  ruler_colour = "highlight ColorColumn guibg=darkblue",
 }
 
 return O

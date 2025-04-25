@@ -1,6 +1,8 @@
 return {
   {
     "williamboman/mason.nvim",
+    dependencies = {
+    },
     config = function()
         require("mason")
     end,
@@ -21,10 +23,12 @@ return {
         "stylua",
         "yamlls",
         "pyright",
+        "pylint",
         "isort",
         "black",
         "codespell",
         "trim_whitespace",
+        "eslint_d",
       },
       automatic_installation = true,
     },
