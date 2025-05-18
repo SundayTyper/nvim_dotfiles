@@ -8,8 +8,8 @@ return {
       keymap = {
         preset = "default",
         -- Custom key mappings
-        ["<C-Up>"] = { "select_next" },
-        ["<C-Down>"] = { "select_prev" },
+        ["<C-Down>"] = { "select_next" },
+        ["<C-Up>"] = { "select_prev" },
         ["<C-CR>"] = { "accept" },
         -- Disable key maps that I don't like
         ["<Up>"] = {},
@@ -19,13 +19,19 @@ return {
       },
       completion = {
         list = {
-          selection = { preselect = false, auto_insert = false }, -- set to preselect, manual or auto_insert
+          -- set to preselect, manual or auto_insert
+          selection = { preselect = false, auto_insert = false },
         },
         ghost_text = {
           enabled = true,
         },
       },
       signature = { enabled = true },
+      sources = {
+        -- `lsp`, `buffer`, `snippets`, `path` and `omni` are built-in
+        -- so you don't need to define them in `sources.providers`
+        default = { "lsp", "buffer", "snippets", "path" },
+      },
     },
   },
 }

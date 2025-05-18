@@ -1,9 +1,10 @@
-vim.g.leaderkey = " "
-
 -- Define basic settings
 local O = require("config.options")
 local A = require("config.autocmds")
 local K = require("config.keymaps")
+
+-- Call in config
+require("config.lazy")
 
 -- Apply options
 for k, v in pairs(O.options) do
@@ -30,6 +31,3 @@ for mode, mappings in pairs(K.mappings) do
     vim.keymap.set(mode, lhs, rhs, { expr = type(rhs) == "function" }) -- Handle expr
   end
 end
-
--- Call in config
-require("config.lazy")
