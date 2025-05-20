@@ -9,8 +9,8 @@ return {
     },
     lazy = false,
     keys = {
-      { "<Leader>e", "<cmd>Neotree filesystem reveal left<cr>", desc = "Show file tree" },
-      { "<Leader>E", "<cmd>Neotree filesystem close<cr>", desc = "Show file tree" },
+      { "<Leader>e", "<cmd>Neotree toggle<cr>", desc = "Show file tree" },
+      { "<Leader>E", "<cmd>Neotree focus<cr>", desc = "Focus file tree" },
     },
     opts = {
       -- fill any relevant options here

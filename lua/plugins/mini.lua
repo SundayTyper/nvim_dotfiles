@@ -59,4 +59,8 @@ return {
       end
     end,
   },
+  {
+    'echasnovski/mini.pairs',
+    version = '*',
+  },
 }

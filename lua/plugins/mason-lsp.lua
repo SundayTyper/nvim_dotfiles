@@ -6,6 +6,7 @@ return {
       local mason = require("mason")
 
       mason.setup({
+        PATH = "prepend", -- instead of "skip"
         ui = {
           icons = {
             package_installed = "", -- tick
@@ -13,6 +14,7 @@ return {
             package_uninstalled = "", -- cross
           },
         },
+        automatic_installation = true,
         ensure_installed = {
           -- Linters & Formatters for efm
           "actionlint",
@@ -39,6 +41,7 @@ return {
     },
     lazy = true,
     opts = {
+      automatic_installation = true,
       ensure_installed = {
         -- LSP
         "bashls",
@@ -64,6 +67,7 @@ return {
     },
     lazy = true,
     opts = {
+      automatic_installation = true,
       ensure_installed = {
         -- Formatters
         "prettier",

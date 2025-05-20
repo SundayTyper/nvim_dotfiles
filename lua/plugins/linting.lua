@@ -1,6 +1,7 @@
 return {
   {
   'creativenull/efmls-configs-nvim',
+  event = { "BufReadPre", "BufNewFile" },
   lazy = true,
   version = '', -- version latest
   dependencies = { 'neovim/nvim-lspconfig' },
@@ -49,7 +50,7 @@ return {
     cpp = { clang_format, cppcheck, cpplint, cspell, codespell },
     c = { clang_format, cppcheck, cpplint, cspell, codespell },
     sh = {shellcheck, shfmt, cspell, codespell },
-    docker = { docker_lint, cspell, codespell },
+    dockerfile = { docker_lint, cspell, codespell },
     cmake = { cmake_lint, cmake_fmt, cspell, codespell },
     }
 
@@ -63,7 +64,7 @@ return {
     init_options = {
       documentFormatting = true,
       documentRangeFormatting = true,
-    },  
+    },
     }
 
     require('lspconfig').efm.setup(vim.tbl_extend('force', efmls_config, {

@@ -43,7 +43,7 @@ return {
         capabilities = capabilities,
       })
       -- configure bash lsp
-      lspconfig["bashla"].setup({
+      lspconfig["bashls"].setup({
         capabilities = capabilities,
       })
       -- configure yaml lsp
@@ -62,7 +62,6 @@ return {
       lspconfig["gh_actions_ls"].setup({
         capabilities = capabilities,
       })
-      
     end,
 
     opts = {
