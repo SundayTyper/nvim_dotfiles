@@ -7,6 +7,7 @@ return {
     },
     config = function()
       local lspconfig = require("lspconfig")
+      -- autocomplete suggestions
       local capabilities = require("blink.cmp").get_lsp_capabilities()
 
       -- configure lua lsp
@@ -21,6 +22,10 @@ return {
       lspconfig["clangd"].setup({
         capabilities = capabilities,
       })
+      -- configure docker lsp
+      lspconfig["dockerls"].setup({
+        capabilities = capabilities,
+      })
       -- configure yaml lsp
       lspconfig["yamlls"].setup({
         capabilities = capabilities,
@@ -30,23 +35,44 @@ return {
         capabilities = capabilities,
       })
       -- configure cmake lsp
-      lspconfig["cmakelang"].setup({
+      lspconfig["neocmake"].setup({
         capabilities = capabilities,
       })
       -- configure typst lsp
       lspconfig["tinymist"].setup({
         capabilities = capabilities,
       })
+      -- configure bash lsp
+      lspconfig["bashla"].setup({
+        capabilities = capabilities,
+      })
+      -- configure yaml lsp
+      lspconfig["yamlls"].setup({
+        capabilities = capabilities,
+      })
+      -- configure markdown lsp
+      lspconfig["marksman"].setup({
+        capabilities = capabilities,
+      })
+      -- configure json lsp
+      lspconfig["jsonls"].setup({
+        capabilities = capabilities,
+      })
+      -- configure gh_actions lsp
+      lspconfig["gh_actions_ls"].setup({
+        capabilities = capabilities,
+      })
+      
     end,
 
     opts = {
       keymap = {
-        { "<leader>gd", "<cmd>FzfLua lsp_regerences<CR>", desc = "Show LSP references" },
+        { "<leader>gr", "<cmd>FzfLua lsp_references<CR>", desc = "Show LSP references" },
         { "<leader>gd", "<cmd>FzfLua lsp_declarations<CR>", desc = "Go to declaration" },
-        { "<leader>gd", "<cmd>FzfLua lsp_definitions<CR>", desc = "Show LSP definitions" },
-        { "<leader>gd", "<cmd>FzfLua lsp_implementations<CR>", desc = "Show LSP implementations" },
-        { "<leader>gd", "<cmd>FzfLua lsp_typedefs<CR>", desc = "Show LSP type definitions" },
-        { "<leader>gd", "<cmd>FzfLua lsp_code_actions<CR>", desc = "Show LSP code actions" },
+        { "<leader>gD", "<cmd>FzfLua lsp_definitions<CR>", desc = "Show LSP definitions" },
+        { "<leader>gi", "<cmd>FzfLua lsp_implementations<CR>", desc = "Show LSP implementations" },
+        { "<leader>gt", "<cmd>FzfLua lsp_typedefs<CR>", desc = "Show LSP type definitions" },
+        { "<leader>ga", "<cmd>FzfLua lsp_code_actions<CR>", desc = "Show LSP code actions" },
         { "K", vim.lsp.buf.hover, mode = "n", desc = "Show hover information" },
       },
     },

@@ -1,15 +1,9 @@
 return {
   {
     "williamboman/mason.nvim",
-    dependencies = {
-      "williamboman/mason-lspconfig.nvim",
-    },
     config = function()
       -- load mason
       local mason = require("mason")
-
-      -- load mason-lspconfig
-      local mason_lspconfig = require("mason-lspconfig")
 
       mason.setup({
         ui = {
@@ -19,33 +13,74 @@ return {
             package_uninstalled = "", -- cross
           },
         },
-      })
-
-      -- list lsp servers
-      mason_lspconfig.setup({
         ensure_installed = {
+          -- Linters & Formatters for efm
           "actionlint",
-          "clangd",
-          "clang-format",
           "cmakelang",
-          "cmakelint",
-          "ts_ls",
-          "prettierd",
-          "prettier",
-          "lua_ls",
-          "stylua",
-          "yamlls",
-          "pyright",
-          "pylint",
-          "isort",
-          "black",
           "codespell",
-          "trim_whitespace",
+          "cpplint",
+          "cspell",
+          "hadolint",
+          "markdownlint",
+          "shellcheck",
+          "prettier",
+          "shfmt",
+          "stylua",
           "eslint_d",
-          "tinymist",
+          "ruff",
         },
-        automatic_installation = true,
       })
     end,
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    dependencies = {
+      "williamboman/mason.nvim",
+    },
+    lazy = true,
+    opts = {
+      ensure_installed = {
+        -- LSP
+        "bashls",
+        "clangd",
+        "dockerls",
+        "efm", -- this will handle linting/formatting
+        "gh_actions_ls",
+        "jsonls",
+        "lua_ls",
+        "marksman",
+        "neocmake",
+        "pyright",
+        "tinymist",
+        "ts_ls",
+        "yamlls",
+      },
+    },
+  },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = {
+      "williamboman/mason.nvim",
+    },
+    lazy = true,
+    opts = {
+      ensure_installed = {
+        -- Formatters
+        "prettier",
+        "stylua",
+        "shfmt",
+        "clang-format",
+        "cmakelang",
+        -- Linters
+        "ruff",
+        "cpplint",
+        "shellcheck",
+        "markdownlint",
+        "hadolint",
+        "actionlint",
+        "codespell",
+        "cspell",
+      },
+    },
   },
 }

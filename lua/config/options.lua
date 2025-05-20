@@ -8,7 +8,6 @@ O.options = {
   -- Enable line wrapping by default
   wrap = true,
   wrapmargin = 100,
-  ruler = true,
 
   -- Search settings
   incsearch = true, -- Incremental search
@@ -23,8 +22,6 @@ O.options = {
 }
 
 O.commands = {
-  syntax_on = "syntax on",
-  ruler_colour = "highlight ColorColumn guibg=darkblue",
 }
 
 return O
