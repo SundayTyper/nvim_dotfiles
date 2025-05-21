@@ -21,7 +21,6 @@ return {
     local luacheck = require('efmls-configs.linters.luacheck')
     -- c/c++
     local clang_format = require("efmls-configs.formatters.clang_format")
-    local cpplint = require("efmls-configs.linters.cpplint")
     local cppcheck = require('efmls-configs.linters.cppcheck')
     clang_format.formatCommand = "clang-format --style=file --fallback-style=LLVM -assume-filename=${INPUT}"
     -- yaml
@@ -47,8 +46,8 @@ return {
     python = { ruff_linter, ruff_fmt, cspell, codespell },
     yaml = { prettier, actionlint, cspell, codespell },
     markdown = { markdown_lint, cspell, codespell},
-    cpp = { clang_format, cppcheck, cpplint, cspell, codespell },
-    c = { clang_format, cppcheck, cpplint, cspell, codespell },
+    cpp = { clang_format, cppcheck, cspell, codespell },
+    c = { clang_format, cppcheck, cspell, codespell },
     sh = {shellcheck, shfmt, cspell, codespell },
     dockerfile = { docker_lint, cspell, codespell },
     cmake = { cmake_lint, cmake_fmt, cspell, codespell },

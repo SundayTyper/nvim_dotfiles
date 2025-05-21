@@ -77,7 +77,6 @@ return {
         "cmakelang",
         -- Linters
         "ruff",
-        "cpplint",
         "shellcheck",
         "markdownlint",
         "hadolint",
