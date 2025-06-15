@@ -4,10 +4,10 @@ O.options = {
   -- Enable line numbers
   number = true,
   relativenumber = true,
+  textwidth = 80,
 
   -- Enable line wrapping by default
   wrap = true,
-  wrapmargin = 100,
 
   -- Search settings
   incsearch = true, -- Incremental search

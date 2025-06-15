@@ -8,14 +8,13 @@ return {
       keymap = {
         preset = "default",
         -- Custom key mappings
-        ["<C-Down>"] = { "select_next" },
-        ["<C-Up>"] = { "select_prev" },
+        ["<C-n>"] = { "select_next" },
+        ["<C-N>"] = { "select_prev" },
         ["<C-CR>"] = { "accept" },
         -- Disable key maps that I don't like
         ["<Up>"] = {},
         ["<Down>"] = {},
         ["<C-p>"] = {},
-        ["<C-n>"] = {},
       },
       completion = {
         list = {
