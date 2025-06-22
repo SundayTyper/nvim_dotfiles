@@ -11,5 +11,9 @@ return {
         ["<Right>"] = { "n", "x" },
       },
     },
+    keys = {
+      -- LSP keymaps
+      { "<leader>ht", "<cmd>Hardtime toggle<CR>", mode = "n", desc = "Toggle HardTime" },
+    },
   },
 }

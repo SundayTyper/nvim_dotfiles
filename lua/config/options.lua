@@ -9,6 +9,9 @@ O.options = {
   -- Enable line wrapping by default
   wrap = true,
 
+  -- Make cursor centred in the window
+  scrolloff = 999,
+
   -- Search settings
   incsearch = true, -- Incremental search
   hlsearch = true, -- Highlight search results
