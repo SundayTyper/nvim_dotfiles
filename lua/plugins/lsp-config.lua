@@ -2,6 +2,19 @@ return {
   {
     "creativenull/efmls-configs-nvim",
     lazy = true,
+    config = function()
+      local lsp_fmt_group = vim.api.nvim_create_augroup("LspFormattingGroup", { clear = true })
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = lsp_fmt_group,
+        callback = function(args)
+          local efm_clients = vim.lsp.get_clients({ bufnr = args.buf, name = "efm" })
+          if vim.tbl_isempty(efm_clients) then
+            return
+          end
+          vim.lsp.buf.format({ bufnr = args.buf })
+        end,
+      })
+    end,
   },
   {
     "neovim/nvim-lspconfig",
@@ -36,23 +49,23 @@ return {
 
       -- Define efmls_config here, where it's accessible for the efm setup
       -- js/ts
-      local eslint = require('efmls-configs.linters.eslint')
+      local eslint = require("efmls-configs.linters.eslint")
       -- everything?
-      local codespell = require('efmls-configs.linters.codespell')
-      local cspell = require('efmls-configs.linters.cspell')
-      local prettier = require('efmls-configs.formatters.prettier')
+      local codespell = require("efmls-configs.linters.codespell")
+      local cspell = require("efmls-configs.linters.cspell")
+      local prettier = require("efmls-configs.formatters.prettier")
       -- python
       local ruff_linter = require("efmls-configs.linters.ruff")
       local ruff_fmt = require("efmls-configs.formatters.ruff")
       -- lua
-      local stylua = require('efmls-configs.formatters.stylua')
-      local luacheck = require('efmls-configs.linters.luacheck')
+      local stylua = require("efmls-configs.formatters.stylua")
+      local luacheck = require("efmls-configs.linters.luacheck")
       -- c/c++
       local clang_format = require("efmls-configs.formatters.clang_format")
-      local cppcheck = require('efmls-configs.linters.cppcheck')
+      local cppcheck = require("efmls-configs.linters.cppcheck")
       clang_format.formatCommand = "clang-format --style=file --fallback-style=LLVM -assume-filename=${INPUT}"
       -- yaml
-      local actionlint = require('efmls-configs.linters.actionlint')
+      local actionlint = require("efmls-configs.linters.actionlint")
       -- markdown
       local markdown_lint = require("efmls-configs.linters.markdownlint")
       -- bash
@@ -60,9 +73,9 @@ return {
       local shfmt = require("efmls-configs.formatters.shfmt")
       -- docker
       local docker_lint = require("efmls-configs.linters.hadolint")
-      -- cmake 
+      -- cmake
       local cmake_lint = require("efmls-configs.linters.cmake_lint")
-      local cmake_fmt = require('efmls-configs.formatters.gersemi')
+      local cmake_fmt = require("efmls-configs.formatters.gersemi")
 
       local languages = {
         typescript = { eslint, prettier, cspell, codespell },
@@ -71,10 +84,10 @@ return {
         lua = { stylua, luacheck, cspell, codespell },
         python = { ruff_linter, ruff_fmt, cspell, codespell },
         yaml = { prettier, actionlint, cspell, codespell },
-        markdown = { markdown_lint, cspell, codespell},
+        markdown = { markdown_lint, cspell, codespell },
         cpp = { clang_format, cppcheck, cspell, codespell },
         c = { clang_format, cppcheck, cspell, codespell },
-        sh = {shellcheck, shfmt, cspell, codespell },
+        sh = { shellcheck, shfmt, cspell, codespell },
         dockerfile = { docker_lint, cspell, codespell },
         cmake = { cmake_lint, cmake_fmt, cspell, codespell },
       }
@@ -82,7 +95,7 @@ return {
       local efm_lsp_config = {
         filetypes = vim.tbl_keys(languages),
         settings = {
-          rootMarkers = { '.git/' },
+          rootMarkers = { ".git/" },
           languages = languages,
         },
         init_options = {
@@ -99,12 +112,14 @@ return {
       for server_name, server_opts in pairs(opts.servers) do
         -- Skip efm here, as we just set it up explicitly
         if server_name ~= "efm" then
-          local ok, server_setup = pcall(function() return lspconfig[server_name].setup end)
-          if ok and type(server_setup) == 'function' then
-              server_setup(server_opts)
+          local ok, server_setup = pcall(function()
+            return lspconfig[server_name].setup
+          end)
+          if ok and type(server_setup) == "function" then
+            server_setup(server_opts)
           else
-              -- Handle cases where a server might not exist or setup is not a function
-              -- print("Warning: Could not setup LSP server: " .. server_name)
+            -- Handle cases where a server might not exist or setup is not a function
+            -- print("Warning: Could not setup LSP server: " .. server_name)
           end
         end
       end
@@ -114,15 +129,20 @@ return {
     -- This is the standard LazyVim way for plugin-specific keymaps.
     keys = {
       -- LSP keymaps
-      { "<leader>K", vim.lsp.buf.hover, mode = "n", desc = "Show hover information" },
-      { "<leader>gr", "<cmd>FzfLua lsp_references<CR>", desc = "Show LSP references" },
-      { "<leader>gd", "<cmd>FzfLua lsp_declarations<CR>", desc = "Go to declaration" },
-      { "<leader>gD", "<cmd>FzfLua lsp_definitions<CR>", desc = "Show LSP definitions" },
+      {
+        "<leader>K",
+        vim.lsp.buf.hover,
+        mode = "n",
+        desc = "Show hover information",
+      },
+      { "<leader>gr", "<cmd>FzfLua lsp_references<CR>",      desc = "Show LSP references" },
+      { "<leader>gd", "<cmd>FzfLua lsp_declarations<CR>",    desc = "Go to declaration" },
+      { "<leader>gD", "<cmd>FzfLua lsp_definitions<CR>",     desc = "Show LSP definitions" },
       { "<leader>gi", "<cmd>FzfLua lsp_implementations<CR>", desc = "Show LSP implementations" },
-      { "<leader>gt", "<cmd>FzfLua lsp_typedefs<CR>", desc = "Show LSP type definitions" },
-      { "<leader>ga", "<cmd>FzfLua lsp_code_actions<CR>", desc = "Show LSP code actions" },
+      { "<leader>gt", "<cmd>FzfLua lsp_typedefs<CR>",        desc = "Show LSP type definitions" },
+      { "<leader>ga", "<cmd>FzfLua lsp_code_actions<CR>",    desc = "Show LSP code actions" },
       -- Add a group leader for CodeCompanion in which-key
-      { "<leader>g", "<Nop>", desc = "FzfLSP" },
+      { "<leader>g",  "<Nop>",                               desc = "FzfLSP" },
     },
   },
 }

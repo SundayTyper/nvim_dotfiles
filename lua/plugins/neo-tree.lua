@@ -13,7 +13,7 @@ return {
       { "<Leader>E", "<cmd>Neotree focus<cr>", desc = "Focus file tree" },
     },
     opts = {
-      -- fill any relevant options here
+      close_if_last_wndow = true,
     },
   },
   { "MunifTanjim/nui.nvim", lazy = true },

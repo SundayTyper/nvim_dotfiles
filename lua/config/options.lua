@@ -6,6 +6,12 @@ O.options = {
   relativenumber = true,
   textwidth = 80,
 
+  -- Tabs and spaces
+  tabstop = 2,
+  shiftwidth = 2,
+  expandtab = true,
+  softtabstop = 2,
+
   -- Enable line wrapping by default
   wrap = true,
 
