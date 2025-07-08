@@ -1,20 +1,25 @@
 return {
   {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v3.x",
+    "mikavilpas/yazi.nvim",
+    event = "VeryLazy",
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim",
+      { "nvim-lua/plenary.nvim", lazy = true },
     },
-    lazy = false,
     keys = {
-      { "<Leader>e", "<cmd>Neotree toggle<cr>", desc = "Show file tree" },
-      { "<Leader>E", "<cmd>Neotree focus<cr>", desc = "Focus file tree" },
+      { "<leader>e", "<cmd>Yazi $(git rev-parse --show-toplevel)<cr>", desc = "Open yazi at the project root" },
     },
     opts = {
-      close_if_last_wndow = true,
+      -- if you want to open yazi instead of netrw, see below for more info
+      open_for_directories = false,
+      keymaps = {
+        show_help = "?",
+      },
     },
-  },
-  { "MunifTanjim/nui.nvim", lazy = true },
+    -- 👇 if you use `open_for_directories=true`, this is recommended
+    init = function()
+      -- More details: https://github.com/mikavilpas/yazi.nvim/issues/802
+      -- vim.g.loaded_netrw = 1
+      vim.g.loaded_netrwPlugin = 1
+    end,
+  }
 }

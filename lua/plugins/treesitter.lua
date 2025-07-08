@@ -2,7 +2,9 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    lazy = true,
+    lazy = false,
+    build = ":TSUpdate",
+    branch = 'master',
     opts = {
       ensure_installed = {
         "bash",
