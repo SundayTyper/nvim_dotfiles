@@ -6,7 +6,7 @@ return {
       { "nvim-lua/plenary.nvim", lazy = true },
     },
     keys = {
-      { "<leader>e", "<cmd>Yazi $(git rev-parse --show-toplevel)<cr>", desc = "Open yazi at the project root" },
+      { "<leader>e", "<cmd>Yazi cwd<cr>", desc = "Open yazi at the project root" },
     },
     opts = {
       -- if you want to open yazi instead of netrw, see below for more info
@@ -21,5 +21,5 @@ return {
       -- vim.g.loaded_netrw = 1
       vim.g.loaded_netrwPlugin = 1
     end,
-  }
+  },
 }
