@@ -4,6 +4,10 @@ return {
     ft = { "markdown", "codecompanion" },
   },
   {
+    "github/copilot.vim",
+    lazy = false,
+  },
+  {
     "olimorris/codecompanion.nvim",
     event = "VeryLazy", -- Load codecompanion lazily
     dependencies = {
@@ -19,7 +23,7 @@ return {
     },
     config = function()
       local ollama_exists = vim.fn.exepath("ollama") ~= ""
-      local copilot_exists = os.getenv("copilot_api_key") ~= nil and os.getenv("copilot_api_key") ~= ""
+      local copilot_exists = os.getenv("copilot_api_key") ~= ""
 
       -- Initialize a table to hold the full configuration
       local opts = {
@@ -109,13 +113,6 @@ return {
 
       -- Conditionally add Copilot adapter and set as default strategy if it exists
       if copilot_exists then
-        opts.adapters.copilot = function()
-          return require("codecompanion.adapters").extend("copilot", {
-            env = {
-              api_key = os.getenv("copilot_api_key"),
-            },
-          })
-        end
         -- Set Copilot as the default for chat and inline if it's the primary choice
         opts.strategies.chat = { adapter = "copilot" }
         opts.strategies.inline = { adapter = "copilot" }
