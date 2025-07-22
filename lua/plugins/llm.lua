@@ -6,6 +6,10 @@ return {
   {
     "github/copilot.vim",
     lazy = false,
+    config = function()
+      vim.g.copilot_enabled = false
+      vim.cmd("Copilot disable")
+    end,
   },
   {
     "olimorris/codecompanion.nvim",
@@ -25,6 +29,17 @@ return {
       local ollama_exists = vim.fn.exepath("ollama") ~= ""
       local copilot_exists = os.getenv("copilot_api_key") ~= ""
 
+      local function get_display_orientation()
+        if vim.o.columns > vim.o.lines then
+          -- landscape
+          return "vertical"
+        else
+          return "horizontal"
+        end
+      end
+
+      local orientation = get_display_orientation()
+
       -- Initialize a table to hold the full configuration
       local opts = {
         adapters = {},
@@ -35,7 +50,7 @@ return {
             start_in_insert_mode = true,
             show_settings = true,
             window = {
-              layout = "float",
+              layout = orientation
             },
             roles = {
               -- The header name for the LLM's messages
