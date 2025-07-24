@@ -21,9 +21,6 @@ return {
       -- Installs the debug adapters for you
       "mason-org/mason.nvim",
       "jay-babu/mason-nvim-dap.nvim",
-
-      -- Add your own debuggers here
-      "leoluz/nvim-dap-go",
     },
     keys = {
       -- Basic debugging keymaps, feel free to change to your liking!
@@ -180,7 +177,7 @@ return {
         -- online, please don't ask me how to install them :)
         ensure_installed = {
           -- Update this to ensure that you have the debuggers for the langs you want
-          "cppdbg",
+          "codelldb",
         },
       })
 
@@ -233,6 +230,15 @@ return {
       dap.listeners.after.event_initialized["dapui_config"] = dapui.open
       dap.listeners.before.event_terminated["dapui_config"] = dapui.close
       dap.listeners.before.event_exited["dapui_config"] = dapui.close
+
+      dap.adapters.codelldb = {
+        type = "server",
+        port = "${port}",
+        executable = {
+          command = "codelldb",
+          args = { "--port", "${port}" },
+        },
+      }
     end,
   },
 }
