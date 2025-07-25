@@ -21,6 +21,9 @@ return {
       -- Installs the debug adapters for you
       "mason-org/mason.nvim",
       "jay-babu/mason-nvim-dap.nvim",
+
+      -- show variables inline
+      "theHamsta/nvim-dap-virtual-text",
     },
     keys = {
       -- Basic debugging keymaps, feel free to change to your liking!
@@ -230,6 +233,9 @@ return {
       dap.listeners.after.event_initialized["dapui_config"] = dapui.open
       dap.listeners.before.event_terminated["dapui_config"] = dapui.close
       dap.listeners.before.event_exited["dapui_config"] = dapui.close
+
+      -- Setup virtual text to show variables inline
+      require("nvim-dap-virtual-text").setup()
 
       dap.adapters.codelldb = {
         type = "server",
