@@ -1,23 +1,26 @@
--- Autocmds are automatically loaded on the VeryLazy event
--- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
---
--- Add any additional autocmds here
--- with `vim.api.nvim_create_autocmd`
---
--- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
--- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
---
+-- autocmds
 
-local A = {}
+-- buffer settings group for specific filetypes
+local filetype_settings_group = vim.api.nvim_create_augroup('FileTypeSpecificSettings', { clear = true })
 
-A.commands = {
-  FileType = {
-    makefile = function()
-      vim.opt.expandtab = false
-      vim.opt.tabstop = 8
-      vim.opt.shiftwidth = 8
-    end,
-  },
-}
 
-return A
+-- Settings for Makefiles
+vim.api.nvim_create_autocmd('FileType', {
+  group = filetype_settings_group,
+  pattern = 'makefile',
+  callback = function()
+    vim.opt_local.expandtab = false
+    vim.opt_local.tabstop = 8
+    vim.opt_local.shiftwidth = 8
+  end,
+})
+
+
+-- Highlight when yanking
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})

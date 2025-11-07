@@ -1,33 +1,12 @@
--- Define basic settings
-local O = require("config.options")
-local A = require("config.autocmds")
-local K = require("config.keymaps")
+-- Load builtin settings and features
+require("config.globals")
+require("config.options")
+require("config.autocmds")
+require("config.keymaps")
 
--- Call in config
+-- Load lazy plugin manager. This calls plugins and themes. Exposes commands
+-- before attempting to set keybindings below
 require("config.lazy")
 
--- Apply options
-for k, v in pairs(O.options) do
-  vim.opt[k] = v
-end
-
-for name, cmd in pairs(O.commands) do
-  vim.api.nvim_command(cmd) -- Run commands that set options
-end
-
--- Apply autocmds
-for event, patterns in pairs(A.commands) do
-  for pattern, callback in pairs(patterns) do
-    vim.api.nvim_create_autocmd(event, {
-      pattern = pattern,
-      callback = callback,
-    })
-  end
-end
-
--- Apply mappings
-for mode, mappings in pairs(K.mappings) do
-  for lhs, rhs in pairs(mappings) do
-    vim.keymap.set(mode, lhs, rhs, { expr = type(rhs) == "function" }) -- Handle expr
-  end
-end
+-- load lsp and settings after mason can install them
+require("config.lsp")
