@@ -69,6 +69,12 @@ return {
         -- Shellcheck (Shell Scripts)
         nls.builtins.diagnostics.shellcheck,
 
+        -- Hadolint (Dockerfile Linter)
+        nls.builtins.diagnostics.hadolint,
+
+        -- ESLint (JavaScript/TypeScript)
+        nls.builtins.diagnostics.eslint,
+
         -- Codespell (Spelling Checker)
         nls.builtins.diagnostics.codespell,
 
@@ -98,6 +104,9 @@ return {
         -- Stylua (Lua Formatter)
         nls.builtins.formatting.stylua,
 
+        -- shfmt (Shell Script Formatter)
+        nls.builtins.formatting.shfmt,
+
         -- Ruff (Python Formatter)
         -- Note: If you use the 'ruff' LSP, it can handle formatting,
         -- but this ensures it works via the standard format command.
@@ -116,7 +125,7 @@ return {
 
         -- Prettier for Markdown, JSON, YAML (optional but common)
         nls.builtins.formatting.prettier.with({
-          filetypes = { "json", "yaml", "markdown" },
+          filetypes = { "json", "yaml", "markdown", "javascript", "javascriptreact", "typescript", "typescriptreact" },
         }),
       })
 

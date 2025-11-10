@@ -6,7 +6,7 @@ return {
 
   -- root marker for files...
   -- this will allow sharing of project config files for the language
-  root_markers = { { '.luarc.json', '.luarc.jsonrc' }, '.git' },
+  root_markers = { '.luarc.json', '.luarc.jsonc', '.git' },
 
   -- server specific settings
   -- https://raw.githubusercontent.com/LuaLS/vscode-lua/master/settings/schema.json
