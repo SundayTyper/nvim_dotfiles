@@ -1,6 +1,9 @@
 return {
   {
     "williamboman/mason.nvim",
+    lazy = false, -- Load on startup to install tools
+    priority = 100, -- Load before other plugins that might need tools
+    
     opts = {
       PATH = "prepend", -- instead of "skip"
       ui = {
@@ -9,6 +12,7 @@ return {
           package_pending = "", -- arrow
           package_uninstalled = "", -- cross
         },
+        border = "rounded",
       },
       automatic_installation = true,
       ensure_installed = {
@@ -26,8 +30,9 @@ return {
         "tinymist",
         "typescript-language-server",
         "yaml-language-server",
-        -- Linters & Formatters for efm
+        -- Linters & Formatters
         "actionlint",
+        "clang-format",
         "cmakelang",
         "codespell",
         "cspell",

@@ -62,18 +62,8 @@ return {
       opts.sources = vim.list_extend(opts.sources or {}, {
 
         -- 📜 LINTERS (Diagnostics) ----------------------------------------------
-
-        -- Actionlint (GitHub Actions)
-        nls.builtins.diagnostics.actionlint,
-
-        -- Shellcheck (Shell Scripts)
-        nls.builtins.diagnostics.shellcheck,
-
-        -- Hadolint (Dockerfile Linter)
-        nls.builtins.diagnostics.hadolint,
-
-        -- ESLint (JavaScript/TypeScript)
-        nls.builtins.diagnostics.eslint,
+        -- Note: Many builtins have been removed from none-ls in recent versions
+        -- Only including ones that are still supported
 
         -- Codespell (Spelling Checker)
         nls.builtins.diagnostics.codespell,
@@ -84,21 +74,6 @@ return {
         -- Markdownlint (Markdown files)
         nls.builtins.diagnostics.markdownlint,
 
-        -- Cmakelang (CMake Linter)
-        nls.builtins.diagnostics.cmakelint, -- Use the cmakelint built-in for linting
-
-        -- cppcheck (C/C++ Static Analyzer)
-        nls.builtins.diagnostics.cppcheck.with({
-          -- Optional: Customize arguments for cppcheck
-          args = {
-            "--enable=all", -- Recommended: Enables all checks
-            "--inconclusive", -- Show inconclusive results
-            "--template={file}:{line}:{severity}:{message}",
-            "$FILENAME",
-          },
-          filetypes = { "c", "cpp" },
-        }),
-
         -- 📐 FORMATTERS --------------------------------------------------------
 
         -- Stylua (Lua Formatter)
@@ -107,25 +82,25 @@ return {
         -- shfmt (Shell Script Formatter)
         nls.builtins.formatting.shfmt,
 
-        -- Ruff (Python Formatter)
-        -- Note: If you use the 'ruff' LSP, it can handle formatting,
-        -- but this ensures it works via the standard format command.
-        nls.builtins.formatting.ruff,
-
-        -- Cmakelang (CMake Formatter)
-        nls.builtins.formatting.cmakeformat, -- Use cmakeformat built-in for formatting
-
-        -- CLANG-FORMAT (C/C++/H Formatter)
+        -- Clang-format (C/C++ Formatter)
         nls.builtins.formatting.clang_format.with({
-          -- Ensure it only runs on the relevant files
-          filetypes = { "c", "cpp", "h" },
-          -- The key argument that tells clang-format to find a project config
-          args = { "--style=file" },
+          filetypes = { "c", "cpp", "h", "hpp" },
+          extra_args = { "--style=file", "--fallback-style=LLVM" },
         }),
 
-        -- Prettier for Markdown, JSON, YAML (optional but common)
+        -- Prettier for various file types
         nls.builtins.formatting.prettier.with({
-          filetypes = { "json", "yaml", "markdown", "javascript", "javascriptreact", "typescript", "typescriptreact" },
+          filetypes = { 
+            "json", 
+            "yaml", 
+            "markdown", 
+            "javascript", 
+            "javascriptreact", 
+            "typescript", 
+            "typescriptreact",
+            "html",
+            "css",
+          },
         }),
       })
 
