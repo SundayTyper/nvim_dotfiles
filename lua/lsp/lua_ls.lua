@@ -1,9 +1,8 @@
 return {
-  -- comand to start language server
+  -- command to start language server
   cmd = { 'lua-language-server' },
-
   -- Filetypes to attach to
-  filetypes = { ' lua' },
+  filetypes = { 'lua' },
 
   -- root marker for files...
   -- this will allow sharing of project config files for the language
@@ -18,8 +17,18 @@ return {
       },
       diagnostics = {
         -- recognise 'vim' global
-        gloabsl = { 'vim' },
+        globals = { 'vim', 'require' },
       },
+      workspace = {
+        library = {
+          [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+          [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+        },
+      },
+      completion = {
+          enable = true,
+          callSnippet = 'Both',
+      }
     }
   }
 }

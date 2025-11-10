@@ -62,5 +62,16 @@ return {
   {
     'echasnovski/mini.pairs',
     version = '*',
+    opts = {
+    pairs = {
+      map = {
+        ['('] = { close = ')', action = 'both' },
+        ['['] = { close = ']', action = 'both' },
+        ['{'] = { close = '}', action = 'both' },
+        ['"'] = { close = '"', action = 'both', pair_break = { enable = true, next = true } },
+        ["'"] = { close = "'", action = 'both', pair_break = { enable = true, next = true } },
+      },
+    }
+  }
   },
 }
