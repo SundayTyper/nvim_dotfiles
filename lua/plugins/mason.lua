@@ -3,7 +3,6 @@ return {
     "williamboman/mason.nvim",
     lazy = false, -- Load on startup to install tools
     priority = 100, -- Load before other plugins that might need tools
-    
     opts = {
       PATH = "prepend", -- instead of "skip"
       ui = {
@@ -35,14 +34,18 @@ return {
         "clang-format",
         "cmakelang",
         "codespell",
+        "cppcheck",
         "cspell",
         "eslint_d",
         "hadolint",
+        "jsonlint",
         "markdownlint",
         "prettier",
         "shellcheck",
         "shfmt",
+        "shpinx-lint",
         "stylua",
+        "yamllint",
       },
     },
   },

@@ -1,0 +1,4 @@
+# ~/.config/lazygit/config.yml
+os:
+  edit: "nvim"
+  editAtLine: '{{editor}} --server /tmp/nvim-server.pipe --remote-tab "$(pwd)/{{filename}}"'
