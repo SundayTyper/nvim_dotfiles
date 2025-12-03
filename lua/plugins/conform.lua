@@ -16,6 +16,9 @@ return {
         sh = { "shfmt" },
         bash = { "shfmt" },
 
+        -- Python
+        python = { "black" },
+
         -- C/C++
         c = { "clang_format" },
         cpp = { "clang_format" },

@@ -11,33 +11,36 @@ return {
       -- Configure linters by filetype
       lint.linters_by_ft = {
         -- C/C++
-        c = { "cppcheck" },
-        cpp = { "cppcheck" },
-        
+        c = { "cpplint" },
+        cpp = { "cpplint" },
+
         -- Python
         python = { "ruff" },
-        
+
         -- Markdown
         markdown = { "markdownlint" },
-        
+
         -- JavaScript/TypeScript
         javascript = { "eslint" },
         typescript = { "eslint" },
         javascriptreact = { "eslint" },
         typescriptreact = { "eslint" },
-        
+
         -- Shell scripts
         sh = { "shellcheck" },
         bash = { "shellcheck" },
-        
+
         -- YAML
         yaml = { "yamllint" },
-        
+
         -- JSON
         json = { "jsonlint" },
-        
+
         -- Docker
         dockerfile = { "hadolint" },
+
+        -- Sphinx
+        rst = { "sphinx-lint" },
       }
 
       -- Configure cspell for all text-based files
@@ -45,7 +48,7 @@ return {
 
       -- Create autocommand for linting
       local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
-      
+
       vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
         group = lint_augroup,
         callback = function()

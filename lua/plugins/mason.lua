@@ -13,13 +13,31 @@ return {
         },
         border = "rounded",
       },
-      automatic_installation = true,
+    },
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "neovim/nvim-lspconfig", -- Required for LSP functionality
+    },
+    lazy = false,
+  },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+    },
+    lazy = false,
+    opts = {
       ensure_installed = {
         -- LSP Servers
         "bash-language-server",
         "clangd",
-        "docker-langserver",
-        "github-actions-language-server",
+        "docker-language-server",
+        "gh-actions-language-server",
+        "goimports",
         "json-lsp",
         "lua-language-server",
         "marksman",
@@ -31,22 +49,26 @@ return {
         "yaml-language-server",
         -- Linters & Formatters
         "actionlint",
+        "black",
         "clang-format",
         "cmakelang",
         "codespell",
-        "cppcheck",
+        "cpplint",
         "cspell",
         "eslint_d",
         "hadolint",
+        "isort",
         "jsonlint",
         "markdownlint",
         "prettier",
         "shellcheck",
         "shfmt",
-        "shpinx-lint",
+        "sphinx-lint",
         "stylua",
         "yamllint",
       },
+      auto_update = true,
+      run_on_start = true,
     },
   },
 }

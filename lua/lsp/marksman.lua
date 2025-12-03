@@ -1,7 +1,7 @@
 return {
-  cmd = { 'marksman', 'server' },
-  filetypes = { 'markdown', 'markdown.mdx' },
-  root_markers = { '.marksman.toml', '.git' },
-  
-  settings = {},
+  -- cmd = { 'marksman', 'server' },
+  -- filetypes = { 'markdown', 'markdown.mdx' },
+  -- root_markers = { '.marksman.toml', '.git' },
+  --
+  -- settings = {},
 }
