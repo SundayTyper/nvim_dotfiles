@@ -35,6 +35,7 @@ return {
         -- LSP Servers
         "bash-language-server",
         "clangd",
+        "copilot",
         "docker-language-server",
         "gh-actions-language-server",
         "goimports",
