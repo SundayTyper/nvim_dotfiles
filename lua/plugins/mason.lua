@@ -22,6 +22,14 @@ return {
       "neovim/nvim-lspconfig", -- Required for LSP functionality
     },
     lazy = false,
+    opts = {
+      automatic_installation = true,
+      handlers = {
+        function(server_name)
+          require("lspconfig")[server_name].setup({})
+        end,
+      },
+    },
   },
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
