@@ -19,6 +19,9 @@ return {
       },
     },
     keys = {
+      -- AI Assistant category
+      { "<leader>a", "<noop>", desc = "+ai" },
+      
       -- Next Edit Suggestions navigation
       {
         "<tab>",

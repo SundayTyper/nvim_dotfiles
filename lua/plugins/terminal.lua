@@ -3,6 +3,9 @@ return {
   {
     "akinsho/nvim-toggleterm.lua",
     version = "*",
+    keys = {
+      { "<leader>t", "<noop>", desc = "+terminal" },
+    },
     config = function()
       require("toggleterm").setup({
         -- Set the terminal to open in a floating window

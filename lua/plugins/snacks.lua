@@ -29,13 +29,21 @@ return {
         enabled = true,
         preset = {
           header = [[
-	 _____    _        _   _ _
-	|  ___|  | |      | | | (_)
-	| |__  __| |______| | | |_ _ __ ___
-	|  __|/ _` |______| | | | | '_ ` _ \
-	| |__| (_| |      \ \_/ / | | | | | |
-	\____/\__,_|       \___/|_|_| |_| |_|
-          ]],
+          .-"""""""-.
+        .'       __  \_
+       /        /  \/  \
+      |         \_0/\_0/______
+      |:.          .'       oo`\
+      |:.         /             \
+      |' ;        |             |
+      |:..   .     \_______     |
+      |::.|'     ,  \,_____\   /
+      |:::.; ' | .  '|      )_/
+      |::; | | ; ; | |
+     /::::.|-| |_|-|, \
+    /'-=-'`  '-'   '--'\
+        ]],
+        center = {},
         },
         sections = {
           { section = "header" },
@@ -130,152 +138,61 @@ return {
     },
 
     keys = {
-      -- Picker (File/Buffer Navigation)
-      {
-        "<leader>ff",
-        function()
-          Snacks.picker.files()
-        end,
-        desc = "Find Files",
-      },
-      {
-        "<leader>fg",
-        function()
-          Snacks.picker.grep()
-        end,
-        desc = "Live Grep",
-      },
-      {
-        "<leader>fb",
-        function()
-          Snacks.picker.buffers()
-        end,
-        desc = "Buffers",
-      },
-      {
-        "<leader>fh",
-        function()
-          Snacks.picker.help()
-        end,
-        desc = "Help Tags",
-      },
-      {
-        "<leader>fo",
-        function()
-          Snacks.picker.recent()
-        end,
-        desc = "Recent Files",
-      },
-      {
-        "<leader>fc",
-        function()
-          Snacks.picker.commands()
-        end,
-        desc = "Commands",
-      },
-      {
-        "<leader>fk",
-        function()
-          Snacks.picker.keymaps()
-        end,
-        desc = "Keymaps",
-      },
-      {
-        "<leader>fm",
-        function()
-          Snacks.picker.marks()
-        end,
-        desc = "Marks",
-      },
-      {
-        "<leader>fr",
-        function()
-          Snacks.picker.resume()
-        end,
-        desc = "Resume Last",
-      },
-      {
-        "<leader>sw",
-        function()
-          Snacks.picker.grep_word()
-        end,
-        desc = "Search Word Under Cursor",
-      },
-      {
-        "<leader>sb",
-        function()
-          Snacks.picker.grep_buffers()
-        end,
-        desc = "Grep Current Buffer",
-      },
+      -- Find/File Navigation
+      { "<leader>f", "<noop>", desc = "+find" },
+      { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
+      { "<leader>fg", function() Snacks.picker.grep() end, desc = "Live Grep" },
+      { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
+      { "<leader>fh", function() Snacks.picker.help() end, desc = "Help Tags" },
+      { "<leader>fo", function() Snacks.picker.recent() end, desc = "Recent Files" },
+      { "<leader>fc", function() Snacks.picker.commands() end, desc = "Commands" },
+      { "<leader>fk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
+      { "<leader>fm", function() Snacks.picker.marks() end, desc = "Marks" },
+      { "<leader>fr", function() Snacks.picker.resume() end, desc = "Resume Last" },
+
+      -- Search
+      { "<leader>s", "<noop>", desc = "+search" },
+      { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Search Word Under Cursor" },
+      { "<leader>sb", function() Snacks.picker.grep_buffers() end, desc = "Grep Current Buffer" },
 
       -- Git
-      {
-        "<leader>gb",
-        function()
-          Snacks.git.blame_line()
-        end,
-        desc = "Git Blame Line",
-      },
+      { "<leader>g", "<noop>", desc = "+git" },
+      { "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git Blame Line" },
+
+      -- LSP
+      { "<leader>l", "<noop>", desc = "+lsp" },
+      { "<leader>li", "<cmd>LspInfo<cr>", desc = "LSP Info" },
+      { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
+      { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
+      { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
+      { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
+      { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
+      { "gai", function() Snacks.picker.lsp_incoming_calls() end, desc = "C[a]lls Incoming" },
+      { "gao", function() Snacks.picker.lsp_outgoing_calls() end, desc = "C[a]lls Outgoing" },
+      { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
+      { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
 
       -- Scratch buffer
-      {
-        "<leader>.",
-        function()
-          Snacks.scratch()
-        end,
-        desc = "Toggle Scratch Buffer",
-      },
-      {
-        "<leader>S",
-        function()
-          Snacks.scratch.select()
-        end,
-        desc = "Select Scratch Buffer",
-      },
+      { "<leader>.", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
+      { "<leader>S", function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
 
       -- Zen mode
-      {
-        "<leader>z",
-        function()
-          Snacks.zen()
-        end,
-        desc = "Toggle Zen Mode",
-      },
-      {
-        "<leader>Z",
-        function()
-          Snacks.zen.zoom()
-        end,
-        desc = "Toggle Zoom",
-      },
+      { "<leader>z", "<noop>", desc = "+zen" },
+      { "<leader>zz", function() Snacks.zen() end, desc = "Toggle Zen Mode" },
+      { "<leader>zm", function() Snacks.zen.zoom() end, desc = "Toggle Zoom" },
 
-      -- Rename
-      {
-        "<leader>cr",
-        function()
-          Snacks.rename.rename_file()
-        end,
-        desc = "Rename File",
-      },
+      -- Buffer management
+      { "<leader>b", "<noop>", desc = "+buffer" },
+      { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
+
+      -- Code actions
+      { "<leader>c", "<noop>", desc = "+code" },
 
       -- Debug/Profile
-      {
-        "<leader>ps",
-        function()
-          Snacks.profiler.scratch()
-        end,
-        desc = "Profiler Scratch",
-      },
+      { "<leader>ps", function() Snacks.profiler.scratch() end, desc = "Profiler Scratch" },
 
       -- Lazygit
-      {
-        "<leader>lg",
-        function()
-          Snacks.lazygit.open()
-        end,
-        desc = "Lazygit",
-      },
+      { "<leader>lg", function() Snacks.lazygit.open() end, desc = "Lazygit" },
     },
 
     init = function()

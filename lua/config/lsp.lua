@@ -20,7 +20,7 @@ end
 local servers = {
   "lua_ls",
   "clangd",
-  "copilot",
+  "copilot_language_server",
   "ruff",
   "ts_ls",
   "dockerls",

@@ -11,6 +11,7 @@ return {
     },
     opts = {},
     keys = {
+      { "<leader>p", "<noop>", desc = "+preview" },
       { "<leader>po", "<cmd>OmniPreview start<CR>", desc = "OmniPreview Start" },
       { "<leader>pc", "<cmd>OmniPreview stop<CR>", desc = "OmniPreview Stop" },
     },
