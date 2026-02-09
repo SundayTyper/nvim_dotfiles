@@ -162,6 +162,9 @@ return {
       -- LSP
       { "<leader>l", "<noop>", desc = "+lsp" },
       { "<leader>li", "<cmd>LspInfo<cr>", desc = "LSP Info" },
+      { "<leader>ls", function() Snacks.picker.lsp_symbols({ toggle = true }) end, desc = "Toggle LSP Symbols" },
+
+      -- LSP Navigation
       { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
       { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
       { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
@@ -169,8 +172,7 @@ return {
       { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
       { "gai", function() Snacks.picker.lsp_incoming_calls() end, desc = "C[a]lls Incoming" },
       { "gao", function() Snacks.picker.lsp_outgoing_calls() end, desc = "C[a]lls Outgoing" },
-      { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
-      { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
+
 
       -- Scratch buffer
       { "<leader>.", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
@@ -187,6 +189,8 @@ return {
 
       -- Code actions
       { "<leader>c", "<noop>", desc = "+code" },
+      { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Actions" },
+      { "<leader>cr", function() Snacks.rename() end, desc = "Rename Symbol" },
 
       -- Debug/Profile
       { "<leader>ps", function() Snacks.profiler.scratch() end, desc = "Profiler Scratch" },
