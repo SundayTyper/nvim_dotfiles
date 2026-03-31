@@ -28,6 +28,19 @@ return {
         function(server_name)
           require("lspconfig")[server_name].setup({})
         end,
+        ["clangd"] = function()
+          require("lspconfig").clangd.setup({
+            cmd = {
+              "clangd",
+              "--log=error", -- Only log errors, not info/warnings
+              "--background-index",
+              "--clang-tidy",
+              "--header-insertion=iwyu",
+              "--completion-style=detailed",
+              "--function-arg-placeholders",
+            },
+          })
+        end,
       },
     },
   },
