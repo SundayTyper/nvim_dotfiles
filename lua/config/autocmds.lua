@@ -72,36 +72,52 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- ide like highlight when stopping cursor
-vim.api.nvim_create_autocmd("CursorMoved", {
-	group = vim.api.nvim_create_augroup("LspReferenceHighlight", { clear = true }),
-	desc = "Highlight references under cursor",
-	callback = function()
-		-- Only run if the cursor is not in insert mode
-		if vim.fn.mode() ~= "i" then
-			local clients = vim.lsp.get_clients({ bufnr = 0 })
-			local supports_highlight = false
-			for _, client in ipairs(clients) do
-				if client.server_capabilities.documentHighlightProvider then
-					supports_highlight = true
-					break -- Found a supporting client, no need to check others
-				end
-			end
+local function supports_document_highlight(bufnr)
+  for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+    if client.server_capabilities.documentHighlightProvider then
+      return true
+    end
+  end
 
-			-- 3. Proceed only if an LSP is active AND supports the feature
-			if supports_highlight then
-				vim.lsp.buf.clear_references()
-				vim.lsp.buf.document_highlight()
-			end
-		end
-	end,
-})
+  return false
+end
 
--- ide like highlight when stopping cursor
-vim.api.nvim_create_autocmd("CursorMovedI", {
-	group = "LspReferenceHighlight",
-	desc = "Clear highlights when entering insert mode",
-	callback = function()
-		vim.lsp.buf.clear_references()
-	end,
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("LspReferenceHighlightAttach", { clear = true }),
+  callback = function(ev)
+    if vim.b[ev.buf].lsp_reference_highlights or not supports_document_highlight(ev.buf) then
+      return
+    end
+
+    vim.b[ev.buf].lsp_reference_highlights = true
+
+    local group = vim.api.nvim_create_augroup("LspReferenceHighlight" .. ev.buf, { clear = true })
+
+    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+      group = group,
+      buffer = ev.buf,
+      desc = "Highlight references under cursor",
+      callback = function()
+        if vim.fn.mode() == "c" then
+          return
+        end
+
+        if not supports_document_highlight(ev.buf) then
+          vim.lsp.buf.clear_references()
+          return
+        end
+
+        vim.lsp.buf.document_highlight()
+      end,
+    })
+
+    vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "InsertEnter", "BufLeave" }, {
+      group = group,
+      buffer = ev.buf,
+      desc = "Clear LSP reference highlights",
+      callback = function()
+        vim.lsp.buf.clear_references()
+      end,
+    })
+  end,
 })

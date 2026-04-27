@@ -1,28 +1,22 @@
--- Snacks.nvim - Collection of QoL plugins by folke
+local M = {}
 
-return {
+M.packages = {
   {
-    "folke/snacks.nvim",
-    priority = 1000,
-    lazy = false,
-    opts = {
+    src = "https://github.com/folke/snacks.nvim.git",
+    name = "snacks.nvim",
+  },
+}
+
+function M.setup()
+  vim.cmd("packadd snacks.nvim")
+
+  require("snacks").setup({
       -- Disable features that overlap with existing plugins
       terminal = { enabled = false },
       notifier = { enabled = false },
       indent = { enabled = true }, -- Replacing blink.indent due to v2.0.0 loading errors
       gitbrowse = { enabled = false },
-
-      -- Enable picker for file/buffer searching
-      picker = {
-        enabled = true,
-        win = {
-          input = {
-            keys = {
-              ["<Esc>"] = { "close", mode = { "n", "i" } },
-            },
-          },
-        },
-      },
+      picker = { enabled = false },
 
       -- Enable dashboard with custom config
       dashboard = {
@@ -48,7 +42,6 @@ return {
         sections = {
           { section = "header" },
           { section = "keys", gap = 1, padding = 1 },
-          { section = "startup" },
         },
       },
 
@@ -130,89 +123,33 @@ return {
         enabled = true,
       },
 
-      -- Lazygit
-      lazygit = {
-        enabled = true,
-        configure = true,
-      },
-    },
+      lazygit = { enabled = false },
+    })
 
-    keys = {
-      -- Find/File Navigation
-      { "<leader>f", "<noop>", desc = "+find" },
-      { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
-      { "<leader>fg", function() Snacks.picker.grep() end, desc = "Live Grep" },
-      { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
-      { "<leader>fh", function() Snacks.picker.help() end, desc = "Help Tags" },
-      { "<leader>fo", function() Snacks.picker.recent() end, desc = "Recent Files" },
-      { "<leader>fc", function() Snacks.picker.commands() end, desc = "Commands" },
-      { "<leader>fk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
-      { "<leader>fm", function() Snacks.picker.marks() end, desc = "Marks" },
-      { "<leader>fr", function() Snacks.picker.resume() end, desc = "Resume Last" },
+  _G.dd = function(...)
+    Snacks.debug.inspect(...)
+  end
+  _G.bt = function()
+    Snacks.debug.backtrace()
+  end
+  vim.print = _G.dd
 
-      -- Search
-      { "<leader>s", "<noop>", desc = "+search" },
-      { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Search Word Under Cursor" },
-      { "<leader>sb", function() Snacks.picker.grep_buffers() end, desc = "Grep Current Buffer" },
+  vim.keymap.set("n", "<leader>g", "<nop>", { desc = "+git" })
+  vim.keymap.set("n", "<leader>gb", function() Snacks.git.blame_line() end, { desc = "Git Blame Line" })
+  vim.keymap.set("n", "<leader>l", "<nop>", { desc = "+lsp" })
+  vim.keymap.set("n", "<leader>li", "<cmd>LspInfo<cr>", { desc = "LSP Info" })
+  vim.keymap.set("n", "<leader>.", function() Snacks.scratch() end, { desc = "Toggle Scratch Buffer" })
+  vim.keymap.set("n", "<leader>S", function() Snacks.scratch.select() end, { desc = "Select Scratch Buffer" })
+  vim.keymap.set("n", "<leader>d", "<nop>", { desc = "+debug" })
+  vim.keymap.set("n", "<leader>ds", function() Snacks.profiler.scratch() end, { desc = "Profiler Scratch" })
+  vim.keymap.set("n", "<leader>z", "<nop>", { desc = "+zen" })
+  vim.keymap.set("n", "<leader>zz", function() Snacks.zen() end, { desc = "Toggle Zen Mode" })
+  vim.keymap.set("n", "<leader>zm", function() Snacks.zen.zoom() end, { desc = "Toggle Zoom" })
+  vim.keymap.set("n", "<leader>b", "<nop>", { desc = "+buffer" })
+  vim.keymap.set("n", "<leader>bd", function() Snacks.bufdelete() end, { desc = "Delete Buffer" })
+  vim.keymap.set({ "n", "v" }, "<leader>c", "<nop>", { desc = "+code" })
+  vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Actions" })
+  vim.keymap.set("n", "<leader>cr", function() Snacks.rename() end, { desc = "Rename Symbol" })
+end
 
-      -- Git
-      { "<leader>g", "<noop>", desc = "+git" },
-      { "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git Blame Line" },
-
-      -- LSP
-      { "<leader>l", "<noop>", desc = "+lsp" },
-      { "<leader>li", "<cmd>LspInfo<cr>", desc = "LSP Info" },
-      { "<leader>ls", function() Snacks.picker.lsp_symbols({ toggle = true }) end, desc = "Toggle LSP Symbols" },
-
-      -- LSP Navigation
-      { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
-      { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
-      { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
-      { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
-      { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
-      { "gai", function() Snacks.picker.lsp_incoming_calls() end, desc = "C[a]lls Incoming" },
-      { "gao", function() Snacks.picker.lsp_outgoing_calls() end, desc = "C[a]lls Outgoing" },
-
-
-      -- Scratch buffer
-      { "<leader>.", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
-      { "<leader>S", function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
-
-      -- Zen mode
-      { "<leader>z", "<noop>", desc = "+zen" },
-      { "<leader>zz", function() Snacks.zen() end, desc = "Toggle Zen Mode" },
-      { "<leader>zm", function() Snacks.zen.zoom() end, desc = "Toggle Zoom" },
-
-      -- Buffer management
-      { "<leader>b", "<noop>", desc = "+buffer" },
-      { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
-
-      -- Code actions
-      { "<leader>c", "<noop>", desc = "+code" },
-      { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Actions" },
-      { "<leader>cr", function() Snacks.rename() end, desc = "Rename Symbol" },
-
-      -- Debug/Profile
-      { "<leader>ps", function() Snacks.profiler.scratch() end, desc = "Profiler Scratch" },
-
-      -- Lazygit
-      { "<leader>lg", function() Snacks.lazygit.open() end, desc = "Lazygit" },
-    },
-
-    init = function()
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "VeryLazy",
-        callback = function()
-          -- Setup some globals for easier access
-          _G.dd = function(...)
-            Snacks.debug.inspect(...)
-          end
-          _G.bt = function()
-            Snacks.debug.backtrace()
-          end
-          vim.print = _G.dd -- Override print to use snacks.debug
-        end,
-      })
-    end,
-  },
-}
+return M

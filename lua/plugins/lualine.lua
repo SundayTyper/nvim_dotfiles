@@ -1,42 +1,47 @@
-return {
-  "nvim-lualine/lualine.nvim",
-  enabled = true,
-  lazy = false,
-  priority = 999,
+local M = {}
 
-  opts = function(_, opts)
-    local function show_macro_recording()
-      local recording_register = vim.fn.reg_recording()
-      if recording_register == "" then
-        return ""
-      else
-        return "Recording @" .. recording_register
-      end
+M.packages = {
+  {
+    src = "https://github.com/nvim-lualine/lualine.nvim.git",
+    name = "lualine.nvim",
+  },
+}
+
+function M.setup()
+  vim.cmd("packadd lualine.nvim")
+
+  local function show_macro_recording()
+    local recording_register = vim.fn.reg_recording()
+    if recording_register == "" then
+      return ""
     end
 
-    -- Update statusline indicating a macro is being recorded.
-    vim.api.nvim_create_autocmd("RecordingEnter", {
-      callback = function()
-        require("lualine").refresh({ place = { "statusline" } })
-      end,
-    })
+    return "Recording @" .. recording_register
+  end
 
-    -- Clear status line macro recording message.s
-    vim.api.nvim_create_autocmd("RecordingLeave", {
-      callback = function()
-        local timer = vim.loop.new_timer()
-        timer:start(
-          50,
-          0,
-          vim.schedule_wrap(function()
-            require("lualine").refresh({ place = { "statusline" } })
-          end)
-        )
-      end,
-    })
+  vim.api.nvim_create_autocmd("RecordingEnter", {
+    callback = function()
+      require("lualine").refresh({ place = { "statusline" } })
+    end,
+  })
 
-    -- Customzie my options.
-    opts.options = {
+  vim.api.nvim_create_autocmd("RecordingLeave", {
+    callback = function()
+      local timer = vim.uv.new_timer()
+      timer:start(
+        50,
+        0,
+        vim.schedule_wrap(function()
+          require("lualine").refresh({ place = { "statusline" } })
+          timer:stop()
+          timer:close()
+        end)
+      )
+    end,
+  })
+
+  require("lualine").setup({
+    options = {
       icons_enabled = true,
       theme = "auto",
       component_separators = { left = "", right = "" },
@@ -48,21 +53,26 @@ return {
           "dashboard",
           "snacks_dashboard",
           "fzf",
-          "lazy",
+          "mason",
+        },
+        winbar = {
+          "alpha",
+          "checkhealth",
+          "dashboard",
+          "snacks_dashboard",
+          "fzf",
           "mason",
         },
       },
       always_divide_middle = true,
-      globalstatus = 1,
+      globalstatus = true,
       refresh = {
         statusline = 1000,
         tabline = 1000,
         winbar = 1000,
       },
-    }
-
-    -- Set desired sections.
-    opts.sections = {
+    },
+    sections = {
       lualine_a = { "mode" },
       lualine_b = { "branch", "diff", "diagnostics" },
       lualine_c = { "filename" },
@@ -73,23 +83,20 @@ return {
       },
       lualine_y = { "fileformat", "filetype" },
       lualine_z = { "encoding" },
-    }
-
-    -- Set inactive sections.
-    opts.inactive_sections = {
+    },
+    inactive_sections = {
       lualine_a = {},
       lualine_b = {},
       lualine_c = {},
       lualine_x = {},
       lualine_y = {},
       lualine_z = {},
-    }
+    },
+    tabline = {},
+    winbar = {},
+    inactive_winbar = {},
+    extensions = { "neo-tree" },
+  })
+end
 
-    -- Initialize everything else.
-    opts.tabline = {}
-    opts.winbar = {}
-    opts.inactive_winbar = {}
-    opts.extensions = { "neo-tree", "lazy" }
-  end,
-}
-
+return M

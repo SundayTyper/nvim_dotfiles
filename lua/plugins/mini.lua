@@ -1,77 +1,88 @@
-return {
+local M = {}
+
+M.packages = {
   {
-    "echasnovski/mini.diff",
-    event = "VeryLazy",
-    keys = {
-      {
-        "<leader>go",
-        function()
-          require("mini.diff").toggle_overlay(0)
-        end,
-        desc = "Toggle mini.diff overlay",
-      },
-    },
-    opts = {
-      view = {
-        style = "sign",
-        signs = {
-          add = "▎",
-          change = "▎",
-          delete = "",
-        },
-      },
-    },
+    src = "https://github.com/echasnovski/mini.diff.git",
+    name = "mini.diff",
   },
   {
-    "echasnovski/mini.comment",
-    event = "VeryLazy",
-    opts = {
-      options = {
-        custom_commentstring = function()
-          return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
-        end,
-      },
-    },
+    src = "https://github.com/echasnovski/mini.comment.git",
+    name = "mini.comment",
   },
   {
-    "JoosepAlviste/nvim-ts-context-commentstring",
-    lazy = true,
-    opts = {
-      enable_autocmd = false,
-    },
+    src = "https://github.com/JoosepAlviste/nvim-ts-context-commentstring.git",
+    name = "nvim-ts-context-commentstring",
   },
   {
-    "echasnovski/mini.icons",
-    lazy = true,
-    opts = {
-      file = {
-        [".keep"] = { glyph = "󰊢", hl = "MiniIconsGrey" },
-        ["devcontainer.json"] = { glyph = "", hl = "MiniIconsAzure" },
-      },
-      filetype = {
-        dotenv = { glyph = "", hl = "MiniIconsYellow" },
-      },
-    },
-    init = function()
-      package.preload["nvim-web-devicons"] = function()
-        require("mini.icons").mock_nvim_web_devicons()
-        return package.loaded["nvim-web-devicons"]
-      end
-    end,
+    src = "https://github.com/echasnovski/mini.icons.git",
+    name = "mini.icons",
   },
   {
-    'echasnovski/mini.pairs',
-    version = '*',
-    opts = {
-    pairs = {
-      map = {
-        ['('] = { close = ')', action = 'both' },
-        ['['] = { close = ']', action = 'both' },
-        ['{'] = { close = '}', action = 'both' },
-        ['"'] = { close = '"', action = 'both', pair_break = { enable = true, next = true } },
-        ["'"] = { close = "'", action = 'both', pair_break = { enable = true, next = true } },
-      },
-    }
-  }
+    src = "https://github.com/echasnovski/mini.pairs.git",
+    name = "mini.pairs",
+    version = vim.version.range("*"),
   },
 }
+
+function M.setup()
+  vim.cmd("packadd mini.icons")
+  require("mini.icons").setup({
+    file = {
+      [".keep"] = { glyph = "󰊢", hl = "MiniIconsGrey" },
+      ["devcontainer.json"] = { glyph = "", hl = "MiniIconsAzure" },
+    },
+    filetype = {
+      dotenv = { glyph = "", hl = "MiniIconsYellow" },
+    },
+  })
+
+  package.preload["nvim-web-devicons"] = function()
+    require("mini.icons").mock_nvim_web_devicons()
+    return package.loaded["nvim-web-devicons"]
+  end
+
+  vim.cmd("packadd nvim-ts-context-commentstring")
+  require("ts_context_commentstring").setup({
+    enable_autocmd = false,
+  })
+
+  vim.cmd("packadd mini.comment")
+  require("mini.comment").setup({
+    options = {
+      custom_commentstring = function()
+        return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
+      end,
+    },
+  })
+
+  vim.cmd("packadd mini.diff")
+  require("mini.diff").setup({
+    view = {
+      style = "sign",
+      signs = {
+        add = "▎",
+        change = "▎",
+        delete = "",
+      },
+    },
+  })
+
+  vim.keymap.set("n", "<leader>go", function()
+    require("mini.diff").toggle_overlay(0)
+  end, { desc = "Toggle mini.diff overlay" })
+
+  vim.cmd("packadd mini.pairs")
+  require("mini.pairs").setup({
+    pairs = {
+      map = {
+        ["("] = { close = ")", action = "both" },
+        ["["] = { close = "]", action = "both" },
+        ["{"] = { close = "}", action = "both" },
+        ['"'] = { close = '"', action = "both", pair_break = { enable = true, next = true } },
+        ["'"] = { close = "'", action = "both", pair_break = { enable = true, next = true } },
+      },
+    },
+  })
+end
+
+return M

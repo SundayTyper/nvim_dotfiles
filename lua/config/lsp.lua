@@ -9,6 +9,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
       -- Set buffer-local options
       vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
 
+      if client.name == "clangd" then
+        vim.keymap.set("n", "<M-o>", "<cmd>LspClangdSwitchHeaderSource<cr>", {
+          buffer = ev.buf,
+          desc = "Switch Header/Source",
+        })
+      end
+
       -- Enable inlay hints only in insert mode (Neovim 0.10+)
       if vim.lsp.inlay_hint and client.server_capabilities.inlayHintProvider then
         local group = vim.api.nvim_create_augroup("LspInlayHints" .. ev.buf, { clear = true })

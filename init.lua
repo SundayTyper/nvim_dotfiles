@@ -2,11 +2,10 @@
 require("config.globals")
 require("config.options")
 
--- Load lazy plugin manager. This calls plugins and themes. Exposes commands
--- before attempting to set keybindings below
-require("config.lazy")
+-- Load plugins through Neovim's builtin package manager.
+require("config.pack").setup()
 
--- load lsp, autocommands and keymaps after lazy installs packages
+-- Load lsp, autocommands and keymaps after plugin registration.
 require("config.lsp")
 require("config.autocmds")
 require("config.keymaps")

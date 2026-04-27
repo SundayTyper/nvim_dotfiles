@@ -27,9 +27,10 @@ vim.opt.smartcase = true -- Case-sensitive search if there are uppercase charact
 -- Other useful settings
 vim.opt.backspace = "indent,eol,start" -- Allow backspacing over indent, EOL, and start of line
 vim.opt.showcmd = true -- Show typed commands
+vim.opt.updatetime = 200 -- Snappier CursorHold updates for IDE-like highlighting
 vim.opt.wildmenu = true -- Enable command-line completion
 vim.opt.winborder = "rounded" -- rounded borders for popus
-vim.opt.clipboard = "unnamedplus" -- connect to system clipboard
+vim.opt.clipboard = { "unnamed", "unnamedplus" } -- sync yank and paste with the system clipboard
 
 -- show invisible characters
 vim.opt.list = true

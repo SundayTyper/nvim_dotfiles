@@ -1,25 +1,27 @@
--- terminal.lua
-return {
+local M = {}
+
+M.packages = {
   {
-    "akinsho/nvim-toggleterm.lua",
-    version = "*",
-    keys = {
-      { "<leader>t", "<noop>", desc = "+terminal" },
-    },
-    config = function()
-      require("toggleterm").setup({
-        -- Set the terminal to open in a floating window
-        direction = "float",
-        -- Configure the floating window appearance
-        float_opts = {
-          border = "curved", -- Options: 'single', 'double', 'shadow', 'curved'
-          width = 160,
-          height = 80,
-          winblend = 3,
-        },
-        -- Set the keybinding to toggle the terminal
-        open_mapping = [[<leader>tt]],
-      })
-    end,
+    src = "https://github.com/akinsho/nvim-toggleterm.lua.git",
+    name = "nvim-toggleterm.lua",
+    version = vim.version.range("*"),
   },
 }
+
+function M.setup()
+  vim.cmd("packadd nvim-toggleterm.lua")
+  require("toggleterm").setup({
+    direction = "float",
+    float_opts = {
+      border = "curved",
+      width = 160,
+      height = 80,
+      winblend = 3,
+    },
+  })
+
+  vim.keymap.set("n", "<leader>t", "<nop>", { desc = "+terminal" })
+  vim.keymap.set("n", "<leader>tt", "<cmd>ToggleTerm<cr>", { desc = "Toggle terminal" })
+end
+
+return M

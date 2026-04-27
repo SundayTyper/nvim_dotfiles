@@ -1,13 +1,25 @@
-return {
+local M = {}
+
+M.packages = {
   {
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    opts = {
-      -- add any options here
-    },
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
-    },
+    src = "https://github.com/MunifTanjim/nui.nvim.git",
+    name = "nui.nvim",
+  },
+  {
+    src = "https://github.com/rcarriga/nvim-notify.git",
+    name = "nvim-notify",
+  },
+  {
+    src = "https://github.com/folke/noice.nvim.git",
+    name = "noice.nvim",
   },
 }
+
+function M.setup()
+  vim.cmd("packadd nui.nvim")
+  vim.cmd("packadd nvim-notify")
+  vim.cmd("packadd noice.nvim")
+  require("noice").setup({})
+end
+
+return M

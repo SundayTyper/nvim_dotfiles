@@ -1,19 +1,38 @@
-return {
+local M = {}
+
+M.packages = {
   {
-    "sylvanfranklin/omni-preview.nvim",
-    dependencies = {
-      -- Typst
-      { "chomosuke/typst-preview.nvim", lazy = true },
-      -- CSV
-      { "hat0uma/csvview.nvim", lazy = true },
-      -- Markdown
-      { "toppair/peek.nvim", lazy = true, build = "deno task --quiet build:fast" },
-    },
-    opts = {},
-    keys = {
-      { "<leader>p", "<noop>", desc = "+preview" },
-      { "<leader>po", "<cmd>OmniPreview start<CR>", desc = "OmniPreview Start" },
-      { "<leader>pc", "<cmd>OmniPreview stop<CR>", desc = "OmniPreview Stop" },
-    },
+    src = "https://github.com/chomosuke/typst-preview.nvim.git",
+    name = "typst-preview.nvim",
+  },
+  {
+    src = "https://github.com/hat0uma/csvview.nvim.git",
+    name = "csvview.nvim",
+  },
+  {
+    src = "https://github.com/toppair/peek.nvim.git",
+    name = "peek.nvim",
+  },
+  {
+    src = "https://github.com/sylvanfranklin/omni-preview.nvim.git",
+    name = "omni-preview.nvim",
   },
 }
+
+M.build_hooks = {
+  ["peek.nvim"] = "deno task --quiet build:fast",
+}
+
+function M.setup()
+  vim.cmd("packadd typst-preview.nvim")
+  vim.cmd("packadd csvview.nvim")
+  vim.cmd("packadd peek.nvim")
+  vim.cmd("packadd omni-preview.nvim")
+  require("omni-preview").setup({})
+
+  vim.keymap.set("n", "<leader>p", "<nop>", { desc = "+preview" })
+  vim.keymap.set("n", "<leader>po", "<cmd>OmniPreview start<CR>", { desc = "OmniPreview Start" })
+  vim.keymap.set("n", "<leader>pc", "<cmd>OmniPreview stop<CR>", { desc = "OmniPreview Stop" })
+end
+
+return M

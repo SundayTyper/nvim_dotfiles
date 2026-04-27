@@ -1,6 +1,15 @@
-return {
+local M = {}
+
+M.packages = {
   {
-    "stevearc/overseer.nvim",
-    opts = {},
+    src = "https://github.com/stevearc/overseer.nvim.git",
+    name = "overseer.nvim",
   },
 }
+
+function M.setup()
+  vim.cmd("packadd overseer.nvim")
+  require("overseer").setup({})
+end
+
+return M

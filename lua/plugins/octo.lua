@@ -1,20 +1,35 @@
--- Octo.nvim - GitHub pull request and issue management in Neovim
+local M = {}
 
-return {
+M.packages = {
   {
-    "pwntester/octo.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-      "nvim-tree/nvim-web-devicons",
-    },
-    cmd = "Octo",
-    config = function()
-      require("octo").setup({
+    src = "https://github.com/pwntester/octo.nvim.git",
+    name = "octo.nvim",
+  },
+  {
+    src = "https://github.com/nvim-lua/plenary.nvim.git",
+    name = "plenary.nvim",
+  },
+  {
+    src = "https://github.com/nvim-telescope/telescope.nvim.git",
+    name = "telescope.nvim",
+  },
+  {
+    src = "https://github.com/nvim-tree/nvim-web-devicons.git",
+    name = "nvim-web-devicons",
+  },
+}
+
+function M.setup()
+  vim.cmd("packadd plenary.nvim")
+  vim.cmd("packadd telescope.nvim")
+  vim.cmd("packadd nvim-web-devicons")
+  vim.cmd("packadd octo.nvim")
+
+  require("octo").setup({
         use_local_fs = false,
         enable_builtin = true,
         default_remote = { "upstream", "origin" },
-        default_merge_method = "commit",
+        default_merge_method = "merge",
         ssh_aliases = {},
         picker = "telescope",
         picker_config = {
@@ -26,7 +41,7 @@ return {
         reaction_viewer_hint_icon = " ",
         user_icon = " ",
         timeline_marker = " ",
-        timeline_indent = "2",
+        timeline_indent = 2,
         right_bubble_delimiter = "",
         left_bubble_delimiter = "",
         github_hostname = "",
@@ -140,41 +155,40 @@ return {
           },
         },
       })
+
+  vim.keymap.set("n", "<leader>gp", "<nop>", { desc = "+pull request" })
+  vim.keymap.set("n", "<leader>gpl", "<cmd>Octo pr list<cr>", { desc = "List PRs" })
+  vim.keymap.set("n", "<leader>gps", "<cmd>Octo pr search<cr>", { desc = "Search PRs" })
+  vim.keymap.set("n", "<leader>gpo", "<cmd>Octo pr checkout<cr>", { desc = "Checkout PR" })
+  vim.keymap.set("n", "<leader>gpr", "<cmd>Octo review start<cr>", { desc = "Start Review" })
+  vim.keymap.set("n", "<leader>gpR", "<cmd>Octo review resume<cr>", { desc = "Resume Review" })
+  vim.keymap.set("n", "<leader>gpb", "<cmd>Octo pr browser<cr>", { desc = "Open PR in Browser" })
+  vim.keymap.set("n", "<leader>gpf", "<cmd>Octo pr changes<cr>", { desc = "List Changed Files" })
+  vim.keymap.set("n", "<leader>gpd", "<cmd>Octo pr diff<cr>", { desc = "Show PR Diff" })
+
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = "octo",
+    callback = function(ev)
+      local opts = { buffer = ev.buf }
+      vim.keymap.set("n", "<leader>gpc", "<nop>", vim.tbl_extend("force", opts, { desc = "+comments" }))
+      vim.keymap.set("n", "<leader>gpca", "<cmd>Octo comment add<cr>", vim.tbl_extend("force", opts, { desc = "Add Comment" }))
+      vim.keymap.set("n", "<leader>gpcd", "<cmd>Octo comment delete<cr>", vim.tbl_extend("force", opts, { desc = "Delete Comment" }))
+      vim.keymap.set("n", "<leader>gpx", "<nop>", vim.tbl_extend("force", opts, { desc = "+reactions" }))
+      vim.keymap.set("n", "<leader>gpx+", "<cmd>Octo reaction thumbs_up<cr>", vim.tbl_extend("force", opts, { desc = "👍" }))
+      vim.keymap.set("n", "<leader>gpx-", "<cmd>Octo reaction thumbs_down<cr>", vim.tbl_extend("force", opts, { desc = "👎" }))
+      vim.keymap.set("n", "<leader>gpxh", "<cmd>Octo reaction heart<cr>", vim.tbl_extend("force", opts, { desc = "❤️" }))
+      vim.keymap.set("n", "<leader>gpxe", "<cmd>Octo reaction eyes<cr>", vim.tbl_extend("force", opts, { desc = "👀" }))
+      vim.keymap.set("n", "<leader>gpxr", "<cmd>Octo reaction rocket<cr>", vim.tbl_extend("force", opts, { desc = "🚀" }))
+      vim.keymap.set("n", "<leader>gpxl", "<cmd>Octo reaction laugh<cr>", vim.tbl_extend("force", opts, { desc = "😄" }))
+      vim.keymap.set("n", "<leader>gpxp", "<cmd>Octo reaction hooray<cr>", vim.tbl_extend("force", opts, { desc = "🎉" }))
+      vim.keymap.set("n", "<leader>gpxc", "<cmd>Octo reaction confused<cr>", vim.tbl_extend("force", opts, { desc = "😕" }))
+      vim.keymap.set("n", "<leader>gpv", "<nop>", vim.tbl_extend("force", opts, { desc = "+review" }))
+      vim.keymap.set("n", "<leader>gpvs", "<cmd>Octo review submit<cr>", vim.tbl_extend("force", opts, { desc = "Submit Review" }))
+      vim.keymap.set("n", "<leader>gpvd", "<cmd>Octo review discard<cr>", vim.tbl_extend("force", opts, { desc = "Discard Review" }))
+      vim.keymap.set("n", "<leader>gpvc", "<cmd>Octo review comments<cr>", vim.tbl_extend("force", opts, { desc = "Review Comments" }))
+      vim.keymap.set("n", "<leader>gpvr", "<cmd>Octo review resume<cr>", vim.tbl_extend("force", opts, { desc = "Resume Review" }))
     end,
-    keys = {
-      -- Pull Request commands
-      { "<leader>pr", "<noop>", desc = "+pull request" },
-      { "<leader>prl", "<cmd>Octo pr list<cr>", desc = "List PRs" },
-      { "<leader>prs", "<cmd>Octo pr search<cr>", desc = "Search PRs" },
-      { "<leader>pro", "<cmd>Octo pr checkout<cr>", desc = "Checkout PR" },
-      { "<leader>prr", "<cmd>Octo review start<cr>", desc = "Start Review" },
-      { "<leader>prR", "<cmd>Octo review resume<cr>", desc = "Resume Review" },
-      { "<leader>prb", "<cmd>Octo pr browser<cr>", desc = "Open PR in Browser" },
-      { "<leader>prf", "<cmd>Octo pr changes<cr>", desc = "List Changed Files" },
-      { "<leader>prd", "<cmd>Octo pr diff<cr>", desc = "Show PR Diff" },
-      
-      -- Comments (available in PR/Issue buffers)
-      { "<leader>prc", "<noop>", desc = "+comments", ft = "octo" },
-      { "<leader>prca", "<cmd>Octo comment add<cr>", desc = "Add Comment", ft = "octo" },
-      { "<leader>prcd", "<cmd>Octo comment delete<cr>", desc = "Delete Comment", ft = "octo" },
-      
-      -- Reactions (available in PR/Issue buffers)
-      { "<leader>prx", "<noop>", desc = "+reactions", ft = "octo" },
-      { "<leader>prx+", "<cmd>Octo reaction thumbs_up<cr>", desc = "👍", ft = "octo" },
-      { "<leader>prx-", "<cmd>Octo reaction thumbs_down<cr>", desc = "👎", ft = "octo" },
-      { "<leader>prxh", "<cmd>Octo reaction heart<cr>", desc = "❤️", ft = "octo" },
-      { "<leader>prxe", "<cmd>Octo reaction eyes<cr>", desc = "👀", ft = "octo" },
-      { "<leader>prxr", "<cmd>Octo reaction rocket<cr>", desc = "🚀", ft = "octo" },
-      { "<leader>prxl", "<cmd>Octo reaction laugh<cr>", desc = "😄", ft = "octo" },
-      { "<leader>prxp", "<cmd>Octo reaction hooray<cr>", desc = "🎉", ft = "octo" },
-      { "<leader>prxc", "<cmd>Octo reaction confused<cr>", desc = "😕", ft = "octo" },
-      
-      -- Review commands
-      { "<leader>prv", "<noop>", desc = "+review", ft = "octo" },
-      { "<leader>prvs", "<cmd>Octo review submit<cr>", desc = "Submit Review", ft = "octo" },
-      { "<leader>prvd", "<cmd>Octo review discard<cr>", desc = "Discard Review", ft = "octo" },
-      { "<leader>prvc", "<cmd>Octo review comments<cr>", desc = "Review Comments", ft = "octo" },
-      { "<leader>prvr", "<cmd>Octo review resume<cr>", desc = "Resume Review", ft = "octo" },
-    },
-  },
-}
+  })
+end
+
+return M
