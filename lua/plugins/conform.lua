@@ -15,7 +15,7 @@ function M.setup()
       lua = { "stylua" },
       sh = { "shfmt" },
       bash = { "shfmt" },
-      python = { "black" },
+      python = { "ruff" },
       c = { "clang_format" },
       cpp = { "clang_format" },
       h = { "clang_format" },
