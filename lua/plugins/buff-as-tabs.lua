@@ -11,6 +11,7 @@ M.packages = {
   },
 }
 
+--- Loads bufferline, configures buffer-style tabs, and binds buffer navigation keys.
 function M.setup()
   vim.cmd("packadd nvim-web-devicons")
   vim.cmd("packadd bufferline.nvim")

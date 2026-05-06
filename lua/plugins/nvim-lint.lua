@@ -7,6 +7,7 @@ M.packages = {
   },
 }
 
+--- Loads nvim-lint, assigns linters by filetype, and registers lint triggers.
 function M.setup()
   vim.cmd("packadd nvim-lint")
 

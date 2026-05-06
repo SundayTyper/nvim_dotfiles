@@ -2,10 +2,12 @@ local M = {}
 
 M.packages = {}
 
+--- Escapes Vim pattern metacharacters in a literal symbol string.
 local function escape_magic(symbol)
   return vim.fn.escape(symbol, [[\.^$~[]*]])
 end
 
+--- Builds a conceal pattern for a literal symbol with optional boundary guards.
 local function literal_symbol_pattern(symbol, opts)
   opts = opts or {}
 
@@ -15,6 +17,7 @@ local function literal_symbol_pattern(symbol, opts)
   return before .. escape_magic(symbol) .. after
 end
 
+--- Builds a conceal pattern that only matches a standalone keyword-like symbol.
 local function keyword_symbol_pattern(symbol)
   return ([[\%%(\k\)\@<!%s\%%(\k\)\@!]]):format(symbol)
 end
@@ -65,11 +68,13 @@ local supported_filetypes = {
 local glyphs_enabled = true
 local window_match_ids = {}
 
+--- Returns whether the current editor mode should display glyph conceals.
 local function mode_supports_glyphs()
   local mode = vim.api.nvim_get_mode().mode:sub(1, 1)
   return mode == "n" or mode == "v" or mode == "V" or mode == "\22"
 end
 
+--- Returns whether a buffer supports glyph translation in the current state.
 local function supports_buffer(bufnr)
   if not glyphs_enabled or not vim.api.nvim_buf_is_valid(bufnr) then
     return false
@@ -82,6 +87,7 @@ local function supports_buffer(bufnr)
   return supported_filetypes[vim.bo[bufnr].filetype] == true
 end
 
+--- Sets conceal options for a window based on whether glyphs are enabled there.
 local function set_window_conceal(winid, enabled)
   if not vim.api.nvim_win_is_valid(winid) then
     return
@@ -91,6 +97,7 @@ local function set_window_conceal(winid, enabled)
   vim.wo[winid].concealcursor = enabled and "nv" or ""
 end
 
+--- Removes tracked conceal matches from a window and clears its match state.
 local function clear_window_matches(winid)
   if not vim.api.nvim_win_is_valid(winid) then
     window_match_ids[winid] = nil
@@ -104,6 +111,7 @@ local function clear_window_matches(winid)
   window_match_ids[winid] = nil
 end
 
+--- Defines all configured glyph conceal matches for a window.
 local function define_window_matches(winid)
   if not vim.api.nvim_win_is_valid(winid) then
     return
@@ -122,6 +130,7 @@ local function define_window_matches(winid)
   window_match_ids[winid] = match_ids
 end
 
+--- Applies glyph conceals to a window when its buffer and mode support them.
 local function apply_glyphs(winid)
   if not vim.api.nvim_win_is_valid(winid) then
     return
@@ -143,6 +152,7 @@ local function apply_glyphs(winid)
   set_window_conceal(winid, enabled)
 end
 
+--- Refreshes glyph conceal state across all visible windows.
 local function refresh_visible_windows(force)
   for _, winid in ipairs(vim.api.nvim_list_wins()) do
     if force then
@@ -152,6 +162,7 @@ local function refresh_visible_windows(force)
   end
 end
 
+--- Installs glyph translation autocommands, command, and keymaps.
 function M.setup()
   local group = vim.api.nvim_create_augroup("GlyphTranslations", { clear = true })
 

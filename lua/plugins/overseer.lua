@@ -7,6 +7,7 @@ M.packages = {
   },
 }
 
+--- Loads Overseer and applies its default task-runner configuration.
 function M.setup()
   vim.cmd("packadd overseer.nvim")
   require("overseer").setup({})

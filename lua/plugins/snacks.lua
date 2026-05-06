@@ -7,6 +7,7 @@ M.packages = {
   },
 }
 
+--- Loads Snacks, enables the selected features, and registers its helper keymaps.
 function M.setup()
   vim.cmd("packadd snacks.nvim")
 
@@ -126,9 +127,12 @@ function M.setup()
       lazygit = { enabled = false },
     })
 
+  --- Inspects values through the Snacks debug helper.
   _G.dd = function(...)
     Snacks.debug.inspect(...)
   end
+
+  --- Prints a Snacks-powered backtrace for debugging.
   _G.bt = function()
     Snacks.debug.backtrace()
   end

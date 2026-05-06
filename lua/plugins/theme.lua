@@ -7,6 +7,7 @@ M.packages = {
   },
 }
 
+--- Loads the colorscheme and applies local highlight overrides.
 function M.setup()
   vim.cmd("packadd kanagawa.nvim")
   vim.cmd("colorscheme kanagawa-wave")

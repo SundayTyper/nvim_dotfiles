@@ -7,6 +7,7 @@ M.packages = {
   },
 }
 
+--- Loads tiny-inline-diagnostic and switches diagnostics away from virtual text.
 function M.setup()
   vim.cmd("packadd tiny-inline-diagnostic.nvim")
 

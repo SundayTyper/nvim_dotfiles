@@ -7,6 +7,7 @@ M.packages = {
   },
 }
 
+--- Loads pi.nvim, configures it, and binds the Pi command namespace.
 function M.setup()
   vim.cmd("packadd pi.nvim")
 

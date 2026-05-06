@@ -7,6 +7,7 @@ M.packages = {
   },
 }
 
+--- Loads render-markdown, configures render behavior, and binds markdown controls.
 function M.setup()
   vim.cmd("packadd render-markdown.nvim")
 

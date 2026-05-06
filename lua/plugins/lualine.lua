@@ -7,9 +7,11 @@ M.packages = {
   },
 }
 
+--- Loads lualine, wires refresh hooks, and configures the statusline layout.
 function M.setup()
   vim.cmd("packadd lualine.nvim")
 
+  --- Returns the active macro recording register for display, or an empty string when idle.
   local function show_macro_recording()
     local recording_register = vim.fn.reg_recording()
     if recording_register == "" then

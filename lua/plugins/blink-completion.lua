@@ -12,6 +12,7 @@ M.packages = {
   },
 }
 
+--- Loads Blink and snippet sources, then configures completion behavior and sources.
 function M.setup()
   vim.cmd("packadd friendly-snippets")
   vim.cmd("packadd blink.cmp")

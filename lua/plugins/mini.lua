@@ -24,6 +24,7 @@ M.packages = {
   },
 }
 
+--- Loads and configures the mini.nvim modules used across the editor.
 function M.setup()
   vim.cmd("packadd mini.icons")
   require("mini.icons").setup({
@@ -36,6 +37,7 @@ function M.setup()
     },
   })
 
+  --- Exposes mini.icons as a drop-in nvim-web-devicons provider for dependent plugins.
   package.preload["nvim-web-devicons"] = function()
     require("mini.icons").mock_nvim_web_devicons()
     return package.loaded["nvim-web-devicons"]

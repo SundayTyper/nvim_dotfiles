@@ -30,7 +30,7 @@ vim.opt.showcmd = true -- Show typed commands
 vim.opt.updatetime = 200 -- Snappier CursorHold updates for IDE-like highlighting
 vim.opt.wildmenu = true -- Enable command-line completion
 vim.opt.winborder = "rounded" -- rounded borders for popus
-vim.opt.clipboard = { "unnamed", "unnamedplus" } -- sync yank and paste with the system clipboard
+vim.opt.clipboard = "unnamedplus" -- use the system clipboard consistently instead of mixing it with the X/Wayland primary selection
 
 -- show invisible characters
 vim.opt.list = true

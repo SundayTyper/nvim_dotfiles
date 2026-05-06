@@ -1,44 +1,44 @@
 local module_names = {
-  "theme",
-  "glyphs",
-  "mini",
-  "lazygit",
-  "snacks",
-  "fzf-lua",
-  "grug-far",
-  "treesitter",
   "blink-completion",
-  "mason",
-  "conform",
-  "inline-diagnostics",
-  "nvim-lint",
-  "noice",
-  "which-key",
-  "lualine",
   "buff-as-tabs",
-  "terminal",
-  "rainbow-delimiters",
-  "overseer",
-  "render-markdown",
-  "yazi",
-  "preview",
   "codesnap",
-  "goose",
-  "pi",
+  "conform",
+  "fzf-lua",
+  "glyphs",
+  "inline-diagnostics",
+  "lazygit",
   "lisp",
+  "lualine",
+  "mason",
+  "match",
+  "mini",
+  "noice",
+  "nvim-lint",
   "octo",
+  "overseer",
+  "pi",
+  "preview",
+  "rainbow-delimiters",
+  "render-markdown",
+  "snacks",
+  "theme",
+  "treesitter",
+  "which-key",
+  "yazi",
 }
 
 local modules = {}
 local packages = {}
 local build_hooks = {}
 
+--- Appends package specs from a plugin module into the shared install list.
 local function add_packages(list)
   for _, spec in ipairs(list or {}) do
     packages[#packages + 1] = spec
   end
 end
 
+--- Merges named build hooks from a plugin module into the shared hook table.
 local function add_build_hooks(hooks)
   for name, command in pairs(hooks or {}) do
     build_hooks[name] = command
@@ -52,6 +52,7 @@ for _, module_name in ipairs(module_names) do
   add_build_hooks(module.build_hooks)
 end
 
+--- Runs a package build hook after install or update and reports failures.
 local function run_build(name, path)
   local command = build_hooks[name]
   if not command then
@@ -75,6 +76,7 @@ end
 
 local M = {}
 
+--- Registers package loading, build hooks, and plugin module setup calls.
 function M.setup()
   vim.api.nvim_create_autocmd("PackChanged", {
     callback = function(ev)

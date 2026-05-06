@@ -11,6 +11,7 @@ M.packages = {
   },
 }
 
+--- Loads Yazi, disables netrw integration, and binds file-manager shortcuts.
 function M.setup()
   vim.g.loaded_netrwPlugin = 1
 
@@ -23,7 +24,8 @@ function M.setup()
     },
   })
 
-  vim.keymap.set("n", "<leader>e", "<cmd>Yazi cwd<cr>", { desc = "Open yazi at the project root" })
+  vim.keymap.set("n", "<leader>e", "<cmd>Yazi<cr>", { desc = "Open yazi at the current file" })
+  vim.keymap.set("n", "<leader>E", "<cmd>Yazi cwd<cr>", { desc = "Open yazi at the project root" })
 end
 
 return M

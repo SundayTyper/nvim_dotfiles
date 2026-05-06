@@ -38,16 +38,19 @@ local codesnap_config = {
   },
 }
 
+--- Shell-escapes a filesystem path for use in external clipboard commands.
 local function shell_escape(path)
   return vim.fn.shellescape(path)
 end
 
+--- Returns a unique PNG output path in Neovim's cache directory.
 local function snapshot_output_path()
   local dir = vim.fn.stdpath("cache") .. "/codesnap"
   vim.fn.mkdir(dir, "p")
   return string.format("%s/%d.png", dir, vim.uv.hrtime())
 end
 
+--- Chooses the available system command for copying a PNG to the clipboard.
 local function clipboard_command(path)
   if vim.fn.executable("wl-copy") == 1 and vim.env.WAYLAND_DISPLAY then
     return string.format("wl-copy --type image/png < %s", shell_escape(path))
@@ -60,6 +63,7 @@ local function clipboard_command(path)
   return nil
 end
 
+--- Patches CodeSnap to save images first and copy them asynchronously to the clipboard.
 local function patch_codesnap_clipboard()
   if vim.g.codesnap_clipboard_patched then
     return
@@ -98,11 +102,13 @@ local function patch_codesnap_clipboard()
   vim.g.codesnap_clipboard_patched = true
 end
 
+--- Returns whether the optional CodeSnap package is already installed in packpath.
 local function is_codesnap_installed()
   local matches = vim.fn.globpath(vim.o.packpath, "pack/*/opt/codesnap.nvim", false, true)
   return type(matches) == "table" and #matches > 0
 end
 
+--- Loads CodeSnap on demand, runs an action, and restores package.cpath afterwards.
 local function with_codesnap(action)
   local original_cpath = package.cpath
   local ok, result = xpcall(function()
@@ -132,6 +138,7 @@ local function with_codesnap(action)
   return result
 end
 
+--- Captures the current visual selection bounds in start-to-end order.
 local function capture_visual_range()
   local start_pos = vim.fn.getpos("v")
   local end_pos = vim.fn.getpos(".")
@@ -146,6 +153,7 @@ local function capture_visual_range()
   }
 end
 
+--- Restores a previously captured visual selection range into visual marks.
 local function apply_visual_range(range)
   if not range then
     return
@@ -155,6 +163,7 @@ local function apply_visual_range(range)
   vim.fn.setpos("'>", range.end_pos)
 end
 
+--- Reapplies a visual range and invokes the named CodeSnap action.
 local function run_codesnap(action_name, range)
   with_codesnap(function(codesnap)
     apply_visual_range(range)
@@ -162,6 +171,7 @@ local function run_codesnap(action_name, range)
   end)
 end
 
+--- Registers commands and mappings for copying code snapshots from selections.
 function M.setup()
   vim.api.nvim_create_user_command("CodeSnapSelection", function(opts)
     run_codesnap("copy", {

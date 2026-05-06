@@ -52,6 +52,7 @@ M.build_hooks = {
   ["nvim-treesitter"] = ":TSInstallSync " .. table.concat(parsers, " ") .. " | TSUpdateSync",
 }
 
+--- Loads Tree-sitter and treesitter-context, then configures parsing and context behavior.
 function M.setup()
   vim.cmd("packadd nvim-treesitter")
   require("nvim-treesitter.configs").setup({

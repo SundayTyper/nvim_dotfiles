@@ -15,6 +15,7 @@ M.packages = {
   },
 }
 
+--- Loads Noice and its UI dependencies, then applies the default setup.
 function M.setup()
   vim.cmd("packadd nui.nvim")
   vim.cmd("packadd nvim-notify")

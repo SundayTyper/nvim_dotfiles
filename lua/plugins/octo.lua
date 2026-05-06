@@ -19,6 +19,7 @@ M.packages = {
   },
 }
 
+--- Loads Octo, configures GitHub review behavior, and registers PR workflow keymaps.
 function M.setup()
   vim.cmd("packadd plenary.nvim")
   vim.cmd("packadd telescope.nvim")

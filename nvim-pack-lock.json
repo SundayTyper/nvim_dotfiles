@@ -69,6 +69,10 @@
       "rev": "12ddd182d9efbdc848b540f16484a583d52da0fb",
       "src": "https://github.com/williamboman/mason.nvim.git"
     },
+    "match.nvim": {
+      "rev": "80ece2277f3aa74c42cbb05220353b7960e54e5a",
+      "src": "https://github.com/ankushbhagats/match.nvim.git"
+    },
     "mini.comment": {
       "rev": "8e5ff3ed3cc0e8f216617aae01020c00c20f7a87",
       "src": "https://github.com/echasnovski/mini.comment.git"

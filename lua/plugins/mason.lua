@@ -19,6 +19,7 @@ M.packages = {
   },
 }
 
+--- Loads Mason and related helpers, then configures LSP servers and tool installs.
 function M.setup()
   vim.cmd("packadd mason.nvim")
   vim.cmd("packadd nvim-lspconfig")

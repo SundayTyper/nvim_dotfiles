@@ -23,6 +23,7 @@ M.build_hooks = {
   ["peek.nvim"] = "deno task --quiet build:fast",
 }
 
+--- Loads preview plugins, initializes OmniPreview, and binds preview controls.
 function M.setup()
   vim.cmd("packadd typst-preview.nvim")
   vim.cmd("packadd csvview.nvim")

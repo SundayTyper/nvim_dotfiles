@@ -7,6 +7,7 @@ M.packages = {
   },
 }
 
+--- Loads rainbow-delimiters and configures delimiter strategies and highlights.
 function M.setup()
   vim.cmd("packadd rainbow-delimiters.nvim")
 

@@ -7,6 +7,7 @@ M.packages = {
   },
 }
 
+--- Loads Conform, configures formatters, and registers format-related hooks and keymaps.
 function M.setup()
   vim.cmd("packadd conform.nvim")
 
@@ -40,6 +41,7 @@ function M.setup()
     format_on_save = nil,
   })
 
+  --- Formats the first modified hunk in the current buffer or falls back to full-buffer formatting.
   local function format_changed_lines()
     local conform = require("conform")
     local minidiff = require("mini.diff")

@@ -11,6 +11,7 @@ M.packages = {
   },
 }
 
+--- Configures Conjure mappings, loads Lisp plugins, and defines the Lisp keymap prefixes.
 function M.setup()
   vim.g["conjure#client_on_load"] = false
   vim.g["conjure#mapping#prefix"] = "<leader>k"

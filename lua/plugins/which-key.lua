@@ -7,6 +7,7 @@ M.packages = {
   },
 }
 
+--- Loads which-key, configures trigger discovery, and binds the keymap popup.
 function M.setup()
   vim.cmd("packadd which-key.nvim")
   local wk = require("which-key")
