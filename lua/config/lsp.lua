@@ -11,7 +11,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
       vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
 
       if client.name == "clangd" then
-        vim.keymap.set("n", "<M-o>", "<cmd>LspClangdSwitchHeaderSource<cr>", {
+        vim.keymap.set("n", "<M-o>", "<cmd>LspClangdSwitchSourceHeader<cr>", {
           buffer = ev.buf,
           desc = "Switch Header/Source",
         })
